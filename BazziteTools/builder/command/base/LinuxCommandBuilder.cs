@@ -1,4 +1,6 @@
 using BazziteTools.builder.command.flatpak;
+using CliWrap;
+using CliWrap.EventStream;
 
 namespace BazziteTools.builder.command.@base;
 
@@ -37,11 +39,7 @@ public class LinuxCommandBuilder(string binary)
     {
         var baseCommand = $"{binary} {string.Join(" ", _arguments)}";
 
-        // Wenn wir im Flatpak sind, müssen wir "rausspringen"
-        return PlatformEnvironment.IsFlatpak ?
-            // Wir nutzen hier direkt die Syntax für flatpak-spawn
-            // Das QuoteIfNeeded sorgt dafür, dass der gesamte Befehl als ein Argument übergeben wird
-            $"flatpak-spawn --host {baseCommand}" : baseCommand;
+        return PlatformEnvironment.IsFlatpak ? $"flatpak-spawn --host {baseCommand}" : baseCommand;
     }
 
     public LinuxCommandBuilder AddRawArgument(string arg)
@@ -54,5 +52,31 @@ public class LinuxCommandBuilder(string binary)
         _arguments.Add("--");
         return this;
     }
+    public async Task ExecuteAsync()
+    {
+        var fullCommand = Build();
+        // CliWrap braucht den ersten Teil als Binary und den Rest als Argumente
+        // Da unser Build() aber ggf. flatpak-spawn vorn dran hat, splitten wir vorsichtig
+        var parts = fullCommand.Split(' ', 2);
+        var cmdName = parts[0];
+        var cmdArgs = parts.Length > 1 ? parts[1] : "";
 
+        await foreach (var cmdEvent in Cli.Wrap(cmdName).WithArguments(cmdArgs).ListenAsync())
+        {
+            switch (cmdEvent)
+            {
+                case StandardOutputCommandEvent stdOut:
+                    Console.WriteLine($"[OUT] {stdOut.Text}");
+                    break;
+                case StandardErrorCommandEvent stdErr:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[ERR] {stdErr.Text}");
+                    Console.ResetColor();
+                    break;
+                case ExitedCommandEvent exited:
+                    Console.WriteLine($"Prozess beendet mit Code: {exited.ExitCode}");
+                    break;
+            }
+        }
+    }
 }
