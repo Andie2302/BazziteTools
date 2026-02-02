@@ -146,28 +146,31 @@ var gpuCheck = new NvidiaSmiBuilder().QueryTemperature();
 var result = await CommandExecutor.ExecuteAsync(gpuCheck); // Jetzt ist result nicht mehr void
 
 // 2. Variable vorab deklarieren
-int temp = 0; 
+var temp = 0; 
 
-if (result.Success && int.TryParse(result.Output, out temp))
+switch (result.Success)
 {
-    Console.WriteLine($"\n🔥 Aktuelle GPU Temperatur: {temp}°C");
-    if (temp > 80) Console.WriteLine("⚠️ Ganz schön heiß hier!");
-}
-else if (!result.Success)
-{
-    Console.WriteLine("Fehler beim Auslesen der GPU Daten.");
+    case true when int.TryParse(result.Output, out temp):
+    {
+        Console.WriteLine($"\n🔥 Aktuelle GPU Temperatur: {temp}°C");
+        if (temp > 80) Console.WriteLine("⚠️ Ganz schön heiß hier!");
+        break;
+    }
+    case false:
+        Console.WriteLine("Fehler beim Auslesen der GPU Daten.");
+        break;
 }
 
 // 1. Liste abfragen
 var listCmd = DistroBox.List();
-var result = await CommandExecutor.ExecuteAsync(listCmd);
+var result2 = await CommandExecutor.ExecuteAsync(listCmd);
 
-if (result.Success)
+if (result2.Success)
 {
     var containers = new List<DistroboxContainer>();
     
     // Distrobox CSV überspringen (Header) und Zeilen splitten
-    var lines = result.Output.Split('\n').Skip(1); 
+    var lines = result2.Output.Split('\n').Skip(1); 
 
     foreach (var line in lines)
     {
