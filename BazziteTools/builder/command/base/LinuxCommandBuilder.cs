@@ -75,7 +75,7 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommandBuilder wh
     /// For example, on Flatpak environments, the resulting command includes a wrapper invocation.
     /// </summary>
     /// <returns>A string representation of the fully constructed shell command.</returns>
-    public string Build()
+    public virtual string Build()
     {
         var baseCommand = BuildBaseCommand();
         return PlatformEnvironment.IsFlatpak ? $"flatpak-spawn --host {baseCommand}" : baseCommand;
