@@ -140,30 +140,20 @@ Console.WriteLine(setupScript.Build());
 Console.WriteLine(makeExec.Build());
 
 
-// 1. Befehl definieren
-var myFolder = FileSystem.CreateDirectory("/tmp/andreas_test").AsRoot();
 
-// 2. Befehl wirklich ausführen
-await CommandExecutor.ExecuteAsync(myFolder);
-
-// 3. Besitzrechte an Andreas zurückgeben
-var fixOwner = new ChownBuilder("/tmp/andreas_test")
-    .ToUser("andreas")
-    .AsRoot();
-
-await CommandExecutor.ExecuteAsync(fixOwner);
-
-
-// 1. Workflow nutzen
-var prep = FileSystemWorkflows.PrepareAdminFolder("/tmp/ki-data", "andreas");
-await CommandExecutor.ExecuteAsync(prep);
-
-// 2. GPU Check
+// 1. GPU Check ausführen
 var gpuCheck = new NvidiaSmiBuilder().QueryTemperature();
-var result = await CommandExecutor.ExecuteAsync(gpuCheck);
+var result = await CommandExecutor.ExecuteAsync(gpuCheck); // Jetzt ist result nicht mehr void
 
-if (result.Success && int.TryParse(result.Output, out int temp))
+// 2. Variable vorab deklarieren
+int temp = 0; 
+
+if (result.Success && int.TryParse(result.Output, out temp))
 {
     Console.WriteLine($"\n🔥 Aktuelle GPU Temperatur: {temp}°C");
-    if(temp > 80) Console.WriteLine("⚠️ Ganz schön heiß hier!");
+    if (temp > 80) Console.WriteLine("⚠️ Ganz schön heiß hier!");
+}
+else if (!result.Success)
+{
+    Console.WriteLine("Fehler beim Auslesen der GPU Daten.");
 }
