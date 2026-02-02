@@ -3,7 +3,6 @@ using BazziteTools.builder.command.curl;
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.flatpak;
-using BazziteTools.builder.command.shell;
 
 Console.WriteLine("Hello, World!");
 
