@@ -18,5 +18,14 @@ public class DistroboxAssembleBuilder : LinuxCommandBuilder<DistroboxAssembleBui
         return this;
     }
 
+    public override bool IsValid(out ValidationResult errors)
+    {
+        errors = new ValidationResult();
+        if (!_arguments.Any(a => a.Contains("--file")))
+        {
+            errors.AddWarning("Keine Datei angegeben. Verwende 'distrobox.ini' als Standard.");
+        }
+        return true; 
+    }
     
 }
