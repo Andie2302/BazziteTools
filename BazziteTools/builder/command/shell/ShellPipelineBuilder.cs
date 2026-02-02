@@ -1,27 +1,27 @@
-using BazziteTools.builder.command.@base;
-using BazziteTools.builder.command.distrobox;
-
 namespace BazziteTools.builder.command.shell;
+
+using BazziteTools.builder.command.@base;
 
 public class ShellPipelineBuilder : ICommandBuilder
 {
     private readonly List<ICommandBuilder> _commands = [];
 
-    public ShellPipelineBuilder Pipe(ICommandBuilder commandBuilder)
+    public ShellPipelineBuilder Pipe(ICommandBuilder command)
     {
-        _commands.Add(commandBuilder);
+        _commands.Add(command);
         return this;
     }
 
-    public string Build() => _commands.Count == 0 ? string.Empty : string.Join(" | ", _commands.Select(c => c.Build()));
+    public string Build() => string.Join(" | ", _commands.Select(c => c.Build()));
+
     public CommandReport Validate()
     {
-        var report = new CommandReport();
-        foreach (var cmdErrors in _commands.Select(command => command.Validate()).Where(cmdErrors => !cmdErrors.IsSuccess))
+        var globalReport = new CommandReport();
+        foreach (var report in _commands.Select(command => command.Validate()))
         {
-            report.AddErrors(cmdErrors.Errors);
+            foreach (var err in report.Errors) globalReport.AddError(err);
+            foreach (var warn in report.Warnings) globalReport.AddWarning(warn);
         }
-        return report;
+        return globalReport;
     }
-    
 }
