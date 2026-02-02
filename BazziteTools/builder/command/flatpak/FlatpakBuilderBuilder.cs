@@ -37,6 +37,7 @@ public class FlatpakBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakBuilderBu
 
     public override CommandReport Validate()
     {
-        throw new NotImplementedException();
+        var commandReport = new CommandReport();
+        return commandReport;
     }
 }
