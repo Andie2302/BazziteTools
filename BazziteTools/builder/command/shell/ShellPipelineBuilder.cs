@@ -14,9 +14,9 @@ public class ShellPipelineBuilder : ICommandBuilder
     }
 
     public string Build() => _commands.Count == 0 ? string.Empty : string.Join(" | ", _commands.Select(c => c.Build()));
-    public bool IsValid(out ValidationResult validationResult)
+    public bool IsValid(out CommandReport commandReport)
     {
-        validationResult = new ValidationResult();
+        commandReport = new CommandReport();
         foreach (var command in _commands)
         {
             if (!command.IsValid(out var cmdErrors))
@@ -24,6 +24,6 @@ public class ShellPipelineBuilder : ICommandBuilder
                 errors.AddRange(cmdErrors);
             }
         }
-        return validationResult.IsSuccess;
+        return commandReport.IsSuccess;
     }
 }
