@@ -1,8 +1,7 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.flatpak;
-
-public class FlatpakInstallBuilder : LinuxCommandBuilder
+public class FlatpakInstallBuilder : LinuxCommandBuilder<FlatpakInstallBuilder>
 {
     public FlatpakInstallBuilder() : base("flatpak")
     {
