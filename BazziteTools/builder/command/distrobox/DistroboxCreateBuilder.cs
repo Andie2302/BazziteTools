@@ -29,4 +29,9 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder
         AddLongOption("home", path);
         return this;
     }
+
+    public void WithName(string distroboxName)
+    {
+        AddLongOption("name", distroboxName);
+    }
 }
