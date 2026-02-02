@@ -1,10 +1,11 @@
+using BazziteTools.builder.command.@base;
+
 namespace BazziteTools.builder.command.flatpak;
 
 public class FlatpakSpawnBuilder : LinuxCommandBuilder
 {
     public FlatpakSpawnBuilder() : base("flatpak-spawn")
     {
-        // Standardmäßig wollen wir meistens auf den Host zugreifen
         AddLongOption("host");
     }
 
