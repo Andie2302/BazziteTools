@@ -1,22 +1,22 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
-public class DistroboxEnterBuilder : LinuxCommandBuilder<DistroboxEnterBuilder>
+public class DistroboxEnterBuilderBuilder : LinuxCommandBuilderBuilder<DistroboxEnterBuilderBuilder>
 {
-    public DistroboxEnterBuilder(string containerName) : base("distrobox")
+    public DistroboxEnterBuilderBuilder(string containerName) : base("distrobox")
     {
         AddArgument("enter");
         AddArgument(containerName);
     }
 
-    public DistroboxEnterBuilder WithCommand(string command)
+    public DistroboxEnterBuilderBuilder WithCommand(string command)
     {
         AddCommandSeparator();
         AddArgument(command);
         return this;
     }
 
-    public DistroboxEnterBuilder Root()
+    public DistroboxEnterBuilderBuilder Root()
     {
         AddLongOption("root");
         return this;
