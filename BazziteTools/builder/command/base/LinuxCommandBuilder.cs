@@ -1,6 +1,4 @@
 using BazziteTools.builder.command.flatpak;
-using CliWrap;
-using CliWrap.EventStream;
 
 namespace BazziteTools.builder.command.@base;
 
@@ -103,34 +101,7 @@ public abstract class LinuxCommandBuilder<T>(string binary) where T : LinuxComma
     {
         return AddToken("--");
     }
-
-    /// <summary>
-    /// Executes the constructed Linux command asynchronously and processes the output and error streams in real-time.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous execution of the command.</returns>
-    public async Task ExecuteAsync()
-    {
-        var fullCommand = Build();
-        var (cmdName, cmdArgs) = SplitCommand(fullCommand);
-        await foreach (var cmdEvent in Cli.Wrap(cmdName).WithArguments(cmdArgs).ListenAsync())
-        {
-            switch (cmdEvent)
-            {
-                case StandardOutputCommandEvent stdOut:
-                    Console.WriteLine($"[OUT] {stdOut.Text}");
-                    break;
-                case StandardErrorCommandEvent stdErr:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"[ERR] {stdErr.Text}");
-                    Console.ResetColor();
-                    break;
-                case ExitedCommandEvent exited:
-                    Console.WriteLine($"Prozess beendet mit Code: {exited.ExitCode}");
-                    break;
-            }
-        }
-    }
-
+    
     /// <summary>
     /// Adds a token to the internal list of arguments for the Linux command being constructed.
     /// </summary>
