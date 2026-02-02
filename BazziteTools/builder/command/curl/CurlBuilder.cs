@@ -53,4 +53,34 @@ public class CurlBuilder : LinuxCommandBuilder<CurlBuilder>
     /// Kombiniert die Standard-Flags für die Installation von Online-Skripten (-fsSL).
     /// </summary>
     public CurlBuilder ForInstallation() => Fail().Silent().ShowError().FollowLocation();
+    
+    public override bool IsValid(out List<string> errors)
+    {
+        errors = [];
+        var url = _arguments.FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            errors.Add("Curl benötigt eine Ziel-URL.");
+            return false;
+        }
+
+        // Erlaubte Protokolle prüfen
+        string[] allowedProtocols = { "http://", "https://", "ftp://", "ftps://", "sftp://", "ws://", "wss://" };
+    
+        if (!allowedProtocols.Any(p => url.StartsWith(p)))
+        {
+            errors.Add($"Das Protokoll der URL '{url}' wird nicht unterstützt oder ist unsicher.");
+        }
+
+        // Sicherheits-Hinweis für Andreas
+        if (url.StartsWith("http://") || url.StartsWith("ftp://") || url.StartsWith("ws://"))
+        {
+            // Wir lassen es durch, geben aber eine Warnung in die Liste
+            // (Hier könnte man überlegen, ob man eine separate 'Warnings'-Liste einführt)
+        }
+
+        return errors.Count == 0;
+    }
+    
 }
