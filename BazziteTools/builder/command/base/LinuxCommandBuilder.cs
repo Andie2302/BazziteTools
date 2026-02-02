@@ -8,7 +8,7 @@ namespace BazziteTools.builder.command.@base;
 /// This class serves as a foundational component for constructing commands with
 /// arguments, options, and other syntax required for executing shell operations.
 /// </summary>
-public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBuilder where T : LinuxCommandBuilderBuilder<T>{
+public abstract class LinuxCommandBuilder<T>(string binary) : ICommandBuilder where T : LinuxCommandBuilder<T>{
     protected readonly List<string> Arguments = [];
 
     /// <summary>
