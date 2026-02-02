@@ -157,3 +157,37 @@ else if (!result.Success)
 {
     Console.WriteLine("Fehler beim Auslesen der GPU Daten.");
 }
+
+// 1. Liste abfragen
+var listCmd = DistroBox.List();
+var result = await CommandExecutor.ExecuteAsync(listCmd);
+
+if (result.Success)
+{
+    var containers = new List<DistroboxContainer>();
+    
+    // Distrobox CSV überspringen (Header) und Zeilen splitten
+    var lines = result.Output.Split('\n').Skip(1); 
+
+    foreach (var line in lines)
+    {
+        var parts = line.Split('|').Select(p => p.Trim('"')).ToArray();
+        if (parts.Length >= 4)
+        {
+            containers.Add(new DistroboxContainer {
+                Id = parts[0],
+                Name = parts[1],
+                Status = parts[2],
+                Image = parts[3]
+            });
+        }
+    }
+
+    // 2. Mit den Daten arbeiten
+    Console.WriteLine($"\n📦 Gefundene Container: {containers.Count}");
+    foreach (var c in containers)
+    {
+        var icon = c.IsRunning ? "🟢" : "🔴";
+        Console.WriteLine($"{icon} {c.Name} ({c.Image})");
+    }
+}
