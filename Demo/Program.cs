@@ -1,17 +1,14 @@
 ﻿using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
-using BazziteTools.builder.command.filesystem;
-using BazziteTools.executor;
 
 Console.WriteLine("Hello, World!");
 
 var name = "ki";
 var home = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),"distroboxes",name);
 
-var distrobox = DistroBox.Create().WithName(name).WithHome(home).WithLatestImage(DistroboxImage.Ubuntu).UseNvidia().Build();
+var distrobox = DistroBox.Create().WithName(name).WithHome(home).WithLatestImage(DistroboxImage.Ubuntu).UseNvidia();
 
-Console.WriteLine(distrobox);
+distrobox.WithPackages("git", "curl", "wget");
 
-var setup = FileSystemWorkflows.PrepareAdminFolder("/tmp/mytool", "username");
-await CommandExecutor.ExecuteAsync(setup);
+Console.WriteLine(distrobox.Build());
 
