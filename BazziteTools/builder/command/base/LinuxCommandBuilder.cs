@@ -1,5 +1,6 @@
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.flatpak;
+using BazziteTools.builder.command.sudo;
 
 namespace BazziteTools.builder.command.@base;
 
@@ -131,5 +132,5 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommandBuilder wh
     }
 
     public abstract CommandReport Validate();
-    
+    public ICommandBuilder AsRoot() => new SudoBuilder(this);
 }
