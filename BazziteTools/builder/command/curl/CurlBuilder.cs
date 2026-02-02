@@ -27,4 +27,6 @@ public class CurlBuilder : LinuxCommandBuilder<CurlBuilder>
 
     // -A, --user-agent <name>: Gibt sich als ein bestimmter Browser aus
     public CurlBuilder UserAgent(string agent) => AddLongOption("user-agent", agent);
+    
+    public CurlBuilder ForInstallation() => Fail().Silent().ShowError().FollowLocation();
 }
