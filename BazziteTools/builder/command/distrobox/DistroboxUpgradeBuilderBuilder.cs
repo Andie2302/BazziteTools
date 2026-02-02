@@ -16,4 +16,9 @@ public class DistroboxUpgradeBuilderBuilder : LinuxCommandBuilderBuilder<Distrob
         AddArgument(containerName);
         return this;
     }
+
+    public override CommandReport Validate()
+    {
+        throw new NotImplementedException();
+    }
 }
