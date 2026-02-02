@@ -30,8 +30,9 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder
         return this;
     }
 
-    public void WithName(string distroboxName)
+    public DistroboxCreateBuilder WithName(string distroboxName)
     {
         AddLongOption("name", distroboxName);
+        return this;
     }
 }
