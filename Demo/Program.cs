@@ -82,8 +82,9 @@ var curl = new CurlBuilder("https://openclaw.ai/install.sh")
 var bash = new GenericCommandBuilder("bash");
 
 // 3. Pipeline erstellen
-var pipeline = new ShellPipelineBuilder()
-    .Pipe(curl)
-    .Pipe(bash);
 
+// Statt manuell die Pipeline zu bauen, nutzt du einfach PipeTo:
+var pipeline = new CurlBuilder("https://openclaw.ai/install.sh")
+    .ForInstallation()
+    .PipeTo(new GenericCommandBuilder("bash"));
 Console.WriteLine($"Pipeline-Befehl: {pipeline.Build()}");
