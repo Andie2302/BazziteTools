@@ -2,13 +2,13 @@ namespace BazziteTools.builder.command.flatpak;
 
 public static class FlatPak
 {
-    public static FlatpakBuilder Command() => new();
+    public static FlatpakBuilderBuilder Command() => new();
     
-    public static FlatpakSpawnBuilder Spawn() => new();
+    public static FlatpakSpawnBuilderBuilder Spawn() => new();
 
-    public static FlatpakInstallBuilder Install(string? appId = null)
+    public static FlatpakInstallBuilderBuilder Install(string? appId = null)
     {
-        var builder = new FlatpakInstallBuilder();
+        var builder = new FlatpakInstallBuilderBuilder();
         if (appId != null) 
         {
             builder.App(appId);
