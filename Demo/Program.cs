@@ -23,6 +23,13 @@ var rmCmd = new DistroboxRemoveBuilder("ki")
     .Force()
     .Build();
 
+var upgradeCmd = DistroBox.Upgrade().All().Build();
+
+var assembleCmd = DistroBox.Assemble().Create().Build();
+
 Console.WriteLine($"Create: {createCmd}");
 Console.WriteLine($"Enter:  {enterCmd}");
 Console.WriteLine($"Remove: {rmCmd}");
+Console.WriteLine($"Upgrade: {upgradeCmd}");
+Console.WriteLine($"Assemble: {assembleCmd}");
+
