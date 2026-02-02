@@ -5,6 +5,7 @@ using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.filesystem;
 using BazziteTools.builder.command.flatpak;
 using BazziteTools.builder.command.rpmostree;
+using BazziteTools.executor;
 
 Console.WriteLine("Hello, World!");
 
@@ -136,3 +137,17 @@ var makeExec = FileSystem.ChangePermissions("/usr/local/bin/mytool/run.sh").Make
 
 Console.WriteLine(setupScript.Build());
 Console.WriteLine(makeExec.Build());
+
+
+// 1. Befehl definieren
+var myFolder = FileSystem.CreateDirectory("/tmp/andreas_test").AsRoot();
+
+// 2. Befehl wirklich ausführen
+await CommandExecutor.ExecuteAsync(myFolder);
+
+// 3. Besitzrechte an Andreas zurückgeben
+var fixOwner = new ChownBuilder("/tmp/andreas_test")
+    .ToUser("andreas")
+    .AsRoot();
+
+await CommandExecutor.ExecuteAsync(fixOwner);
