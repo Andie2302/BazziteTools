@@ -9,4 +9,6 @@ public static class PlatformEnvironment
     public static bool IsFlatpak => File.Exists(FlatpakInfoPath);
 
     public static bool IsNvidiaDriverLoaded => Directory.Exists(NvidiaDriverPath);
+    public static bool IsNvidiaDriverAvailable => Directory.Exists("/proc/driver/nvidia");
+    
 }
