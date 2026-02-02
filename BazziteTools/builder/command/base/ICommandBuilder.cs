@@ -6,5 +6,5 @@ public interface ICommandBuilder
 {
     string Build();
 
-    public bool IsValid(out ValidationResult validationResult);
+    public bool IsValid(out CommandReport commandReport);
 }
