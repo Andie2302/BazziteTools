@@ -129,8 +129,3 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T :
         return (parts[0], parts.Length > 1 ? parts[1] : "");
     }
 }
-
-public interface ICommand
-{
-    string Build();
-}
