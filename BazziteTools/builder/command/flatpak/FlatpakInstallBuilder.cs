@@ -1,32 +1,32 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.flatpak;
-public class FlatpakInstallBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakInstallBuilderBuilder>
+public class FlatpakInstallBuilder : LinuxCommandBuilder<FlatpakInstallBuilder>
 {
-    public FlatpakInstallBuilderBuilder() : base("flatpak")
+    public FlatpakInstallBuilder() : base("flatpak")
     {
         AddArgument("install");
     }
 
-    public FlatpakInstallBuilderBuilder From(string remote = "flathub")
+    public FlatpakInstallBuilder From(string remote = "flathub")
     {
         AddArgument(remote);
         return this;
     }
 
-    public FlatpakInstallBuilderBuilder App(string appId)
+    public FlatpakInstallBuilder App(string appId)
     {
         AddArgument(appId);
         return this;
     }
 
-    public FlatpakInstallBuilderBuilder AssumeYes()
+    public FlatpakInstallBuilder AssumeYes()
     {
         AddShortOption('y');
         return this;
     }
 
-    public FlatpakInstallBuilderBuilder User()
+    public FlatpakInstallBuilder User()
     {
         AddLongOption("user");
         return this;
