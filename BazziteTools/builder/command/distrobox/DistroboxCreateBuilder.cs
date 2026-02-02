@@ -1,11 +1,10 @@
+using BazziteTools.builder.command.distrobox.images;
+
 namespace BazziteTools.builder.command.distrobox;
 
 public class DistroboxCreateBuilder : LinuxCommandBuilder
 {
-    public DistroboxCreateBuilder() : base("distrobox") 
-    {
-        AddArgument("create");
-    }
+    public DistroboxCreateBuilder() : base("distrobox") => AddArgument("create");
 
     public DistroboxCreateBuilder WithImage(string image)
     {
@@ -13,10 +12,7 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder
         return this;
     }
 
-    public DistroboxCreateBuilder WithLatestImage(DistroboxImage image)
-    {
-        return WithImage(image.ToImageString());
-    }
+    public DistroboxCreateBuilder WithLatestImage(DistroboxImage image) => WithImage(image.ToImageString());
 
     public DistroboxCreateBuilder UseNvidia()
     {
