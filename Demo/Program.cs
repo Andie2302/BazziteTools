@@ -88,3 +88,21 @@ var pipeline = new CurlBuilder("https://openclaw.ai/install.sh")
     .ForInstallation()
     .PipeTo(new GenericCommandBuilder("bash"));
 Console.WriteLine($"Pipeline-Befehl: {pipeline.Build()}");
+
+var xxx=DistroBox.Create().Build();
+Console.WriteLine($"Distrobox-Befehl: {xxx}");
+
+
+var badBuilder = DistroBox.Create(); // Name und Image fehlen!
+
+if (!badBuilder.IsValid(out var errors))
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("Warnung: Der Befehl ist unvollständig:");
+    errors.ForEach(e => Console.WriteLine($" - {e}"));
+    Console.ResetColor();
+}
+else
+{
+    Console.WriteLine($"Befehl ist bereit: {badBuilder.Build()}");
+}
