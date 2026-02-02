@@ -1,8 +1,7 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
-
-public class DistroboxUpgradeBuilder : LinuxCommandBuilder
+public class DistroboxUpgradeBuilder : LinuxCommandBuilder<DistroboxUpgradeBuilder>
 {
     public DistroboxUpgradeBuilder() : base("distrobox") => AddArgument("upgrade");
 
