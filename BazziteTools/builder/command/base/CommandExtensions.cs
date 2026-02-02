@@ -1,4 +1,5 @@
 using BazziteTools.builder.command.shell;
+using BazziteTools.builder.command.sudo;
 
 namespace BazziteTools.builder.command.@base;
 
@@ -15,4 +16,6 @@ public static class CommandExtensions
     {
         return pipeline.Pipe(next);
     }
+
+    public static ICommandBuilder WithSudo(this ICommandBuilder command) => new SudoBuilder(command);
 }
