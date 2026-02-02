@@ -1,55 +1,58 @@
 using BazziteTools.builder.command.@base;
-
 namespace BazziteTools.builder.command.rpmostree;
-
 public class RpmOstreeBuilder : LinuxCommandBuilder<RpmOstreeBuilder>
 {
+    private const string InstallCommand = "install";
+    private const string UpgradeCommand = "upgrade";
+    private const string ApplyLiveOption = "apply-live";
+    private const string ApplyLiveArgument = "--apply-live";
+
+    private const string NoActionError = "Es wurde keine Aktion für rpm-ostree festgelegt.";
+    private const string InstallRebootWarning =
+        "Hinweis: Diese Installation wird erst nach einem Neustart aktiv, außer du nutzt .ApplyLive().";
+
     public RpmOstreeBuilder() : base("rpm-ostree")
     {
     }
-
-// In RpmOstreeBuilder.cs
+    // In RpmOstreeBuilder.cs
     public RpmOstreeBuilder Install(params string[] packageNames)
     {
-        AddArgument("install");
-        foreach (var pkg in packageNames)
-        {
-            AddArgument(pkg);
-        }
-
+        AddArgument(InstallCommand);
+        AddArguments(packageNames);
         return this;
     }
-
     public RpmOstreeBuilder Upgrade()
     {
-        AddArgument("upgrade");
+        AddArgument(UpgradeCommand);
         return this;
     }
-
     public RpmOstreeBuilder ApplyLive()
     {
         // Versucht Änderungen ohne Reboot anzuwenden (geht nicht immer)
-        AddLongOption("apply-live");
+        AddLongOption(ApplyLiveOption);
         return this;
     }
-
     public override CommandReport Validate()
     {
-        var report = new CommandReport();
-
+        var validation = new CommandReport();
         if (Arguments.Count == 0)
         {
-            report.AddError("Es wurde keine Aktion für rpm-ostree festgelegt.");
-            return report;
+            validation.AddError(NoActionError);
+            return validation;
         }
-
         // Warnung, wenn kein Reboot-Management geplant ist
-        if (Arguments.Contains("install") && !Arguments.Contains("--apply-live"))
+        if (Arguments.Contains(InstallCommand) && !Arguments.Contains(ApplyLiveArgument))
         {
-            report.AddWarning(
-                "Hinweis: Diese Installation wird erst nach einem Neustart aktiv, außer du nutzt .ApplyLive().");
+            validation.AddWarning(InstallRebootWarning);
         }
+        return validation;
+    }
 
-        return report;
+    private void AddArguments(IEnumerable<string> args)
+    {
+        foreach (var arg in args)
+        {
+            AddArgument(arg);
+        }
     }
 }
