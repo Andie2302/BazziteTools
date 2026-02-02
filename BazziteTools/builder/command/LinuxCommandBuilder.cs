@@ -15,9 +15,9 @@ public class LinuxCommandBuilder(string binary)
     }
 
     // Fügt --long-option hinzu
-    public void AddLongOption(string option, string? value = null)
+    public void AddLongOption(string option, string? value = null, char separator = ' ')
     {
-        if (value != null) _parts.Add($"--{option}={value}"); // Oder mit Leerzeichen
+        if (value != null) _parts.Add($"--{option}{separator}{value}"); // Oder mit Leerzeichen
         else _parts.Add($"--{option}");
     }
 
