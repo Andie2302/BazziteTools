@@ -80,10 +80,7 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
         return PlatformEnvironment.IsFlatpak ? $"flatpak-spawn --host {baseCommand}" : baseCommand;
     }
 
-    public bool IsValid(out List<string> errors)
-    {
-        throw new NotImplementedException();
-    }
+    public abstract bool IsValid(out ValidationResult validationResult);
 
     /// <summary>
     /// Adds a raw command argument token to the internal list of arguments for the Linux command being constructed.
