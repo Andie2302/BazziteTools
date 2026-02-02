@@ -3,7 +3,7 @@ using BazziteTools.builder.command.distrobox;
 
 namespace BazziteTools.builder.command.@base;
 
-public class GenericCommandBuilderBuilder(string binary) : LinuxCommandBuilderBuilder<GenericCommandBuilderBuilder>(binary)
+public class GenericCommandBuilder(string binary) : LinuxCommandBuilder<GenericCommandBuilder>(binary)
 {
     public override CommandReport Validate()
     {
