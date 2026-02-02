@@ -3,7 +3,7 @@ using BazziteTools.builder.command.distrobox.images;
 
 namespace BazziteTools.builder.command.distrobox;
 
-public class DistroboxCreateBuilder : LinuxCommandBuilder
+public class DistroboxCreateBuilder : LinuxCommandBuilder<DistroboxCreateBuilder>
 {
     public DistroboxCreateBuilder() : base("distrobox") => AddArgument("create");
 
