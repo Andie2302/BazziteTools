@@ -2,6 +2,7 @@
 
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
+using BazziteTools.builder.command.flatpak;
 
 Console.WriteLine("Hello, World!");
 
@@ -33,3 +34,16 @@ Console.WriteLine($"Remove: {rmCmd}");
 Console.WriteLine($"Upgrade: {upgradeCmd}");
 Console.WriteLine($"Assemble: {assembleCmd}");
 
+// Erstelle den Distrobox-Befehl
+var distroboxCmd = new DistroboxCreateBuilder()
+    .WithName("ki-box")
+    .WithLatestImage(DistroboxImage.Ubuntu)
+    .Build();
+
+// Packe ihn in flatpak-spawn, damit er auf Bazzite funktioniert
+var finalCmd = new FlatpakSpawnBuilder()
+    .Wrap(distroboxCmd)
+    .Build();
+Console.WriteLine(finalCmd);
+
+// Ergebnis: flatpak-spawn --host distrobox create --name ki-box --image ubuntu:latest
