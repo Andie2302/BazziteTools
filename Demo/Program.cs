@@ -94,16 +94,20 @@ Console.WriteLine($"Distrobox-Befehl: {xxx}");
 
 var badBuilder = DistroBox.Create(); // Name und Image fehlen!
 
-// Neu
 var report = badBuilder.Validate();
-if (!report.IsSuccess) 
-{ 
-    foreach (var error in report.Errors)
-    {
-        Console.WriteLine($" - {error}");
-    }
-}
-else
+
+if (!report.IsSuccess)
 {
-    Console.WriteLine($"Befehl ist bereit: {badBuilder.Build()}");
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("❌ Fehler im Befehl:");
+    foreach (var error in report.Errors) Console.WriteLine($"   - {error}");
 }
+
+if (report.HasWarnings)
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("⚠️  Warnungen:");
+    foreach (var warning in report.Warnings) Console.WriteLine($"   - {warning}");
+}
+
+Console.ResetColor();
