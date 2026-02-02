@@ -1,3 +1,5 @@
+using BazziteTools.builder.command.flatpak;
+
 namespace BazziteTools.builder.command.@base;
 
 public class LinuxCommandBuilder(string binary)
@@ -30,8 +32,17 @@ public class LinuxCommandBuilder(string binary)
             : $"--{option}{separator}{QuoteIfNeeded(value)}";
 
     private static string QuoteIfNeeded(string value) => value.Contains(' ') ? $"\"{value}\"" : value;
+    
+    public string Build()
+    {
+        var baseCommand = $"{binary} {string.Join(" ", _arguments)}";
 
-    public string Build() => $"{binary} {string.Join(" ", _arguments)}";
+        // Wenn wir im Flatpak sind, müssen wir "rausspringen"
+        return PlatformEnvironment.IsFlatpak ?
+            // Wir nutzen hier direkt die Syntax für flatpak-spawn
+            // Das QuoteIfNeeded sorgt dafür, dass der gesamte Befehl als ein Argument übergeben wird
+            $"flatpak-spawn --host {baseCommand}" : baseCommand;
+    }
 
     public LinuxCommandBuilder AddRawArgument(string arg)
     {
