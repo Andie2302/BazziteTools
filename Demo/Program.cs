@@ -46,8 +46,6 @@ var builder = DistroBox.Create()
 
 Console.WriteLine($"Generierter Befehl: {builder.Build()}");
 
-await builder.ExecuteAsync();
-
 var installCmd = FlatPak.Install("com.discordapp.Discord")
     .From("flathub")
     .AssumeYes()
