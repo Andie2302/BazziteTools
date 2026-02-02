@@ -1,6 +1,6 @@
-namespace BazziteTools.builder.command.distrobox;
+namespace BazziteTools.builder.command.@base;
 
-public class ValidationResult
+public class CommandReport
 {
     private readonly List<string> _errors = [];
     private readonly List<string> _warnings = [];
@@ -12,6 +12,5 @@ public class ValidationResult
     public IReadOnlyList<string> Warnings => _warnings;
 
     public bool IsSuccess => _errors.Count == 0;
-    
     public bool HasWarnings => _warnings.Count > 0;
 }
