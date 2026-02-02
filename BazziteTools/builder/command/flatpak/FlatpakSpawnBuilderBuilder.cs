@@ -15,11 +15,11 @@ public class FlatpakSpawnBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakSpaw
         return this;
     }
 
-    public override bool IsValid(out List<string> errors)
+    public override CommandReport Validate()
     {
-        errors = [];
-        if (!_arguments.Any(a => !a.Contains("--host")))
-            errors.Add("Kein Befehl zum Ausführen (Wrap) angegeben.");
-        return errors.Count == 0;
+        var report = new CommandReport();
+        if (Arguments.All(a => a.Contains("--host")))
+            report.AddError("Kein Befehl zum Ausführen (Wrap) angegeben.");
+        return report;
     }
 }
