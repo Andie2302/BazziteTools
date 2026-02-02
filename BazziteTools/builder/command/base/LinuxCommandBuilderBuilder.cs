@@ -9,7 +9,7 @@ namespace BazziteTools.builder.command.@base;
 /// arguments, options, and other syntax required for executing shell operations.
 /// </summary>
 public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBuilder where T : LinuxCommandBuilderBuilder<T>{
-    protected readonly List<string> _arguments = [];
+    protected readonly List<string> Arguments = [];
 
     /// <summary>
     /// Adds a command argument token to the internal list of arguments for the Linux command being constructed.
@@ -44,7 +44,7 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
     /// <returns>The <see cref="T"/> instance for method chaining.</returns>
     public T AddLongOption(string option, string? value = null, char separator = ' ')
     {
-        _arguments.Add(FormatLongOption(option, value, separator));
+        Arguments.Add(FormatLongOption(option, value, separator));
         return (T) this;
     }
 
@@ -80,8 +80,6 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
         return PlatformEnvironment.IsFlatpak ? $"flatpak-spawn --host {baseCommand}" : baseCommand;
     }
 
-    public abstract bool IsValid(out CommandReport commandReport);
-
     /// <summary>
     /// Adds a raw command argument token to the internal list of arguments for the Linux command being constructed.
     /// Unlike other methods that process options or flags, this method directly appends the raw argument as-is.
@@ -111,7 +109,7 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
     /// <returns>The <see cref="T"/> instance for method chaining.</returns>
     private T AddToken(string token)
     {
-        _arguments.Add(token);
+        Arguments.Add(token);
         return (T) this;
     }
 
@@ -119,7 +117,7 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
     /// Constructs the base command string by combining the binary name with its arguments.
     /// </summary>
     /// <returns>The fully constructed base command as a single string.</returns>
-    private string BuildBaseCommand() => $"{binary} {string.Join(" ", _arguments)}";
+    private string BuildBaseCommand() => $"{binary} {string.Join(" ", Arguments)}";
 
     /// <summary>
     /// Splits a full command string into its binary name and arguments.
@@ -132,5 +130,6 @@ public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBui
         return (parts[0], parts.Length > 1 ? parts[1] : "");
     }
 
+    public abstract CommandReport Validate();
     
 }
