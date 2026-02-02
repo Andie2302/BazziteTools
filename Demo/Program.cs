@@ -94,12 +94,14 @@ Console.WriteLine($"Distrobox-Befehl: {xxx}");
 
 var badBuilder = DistroBox.Create(); // Name und Image fehlen!
 
-if (!badBuilder.IsValid(out var errors))
-{
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine("Warnung: Der Befehl ist unvollständig:");
-    errors.ForEach(e => Console.WriteLine($" - {e}"));
-    Console.ResetColor();
+// Neu
+var report = badBuilder.Validate();
+if (!report.IsSuccess) 
+{ 
+    foreach (var error in report.Errors)
+    {
+        Console.WriteLine($" - {error}");
+    }
 }
 else
 {
