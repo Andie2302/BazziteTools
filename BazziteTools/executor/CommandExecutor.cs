@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using System.Text;
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.executor;
 
 public static class CommandExecutor
 {
-    public static async Task ExecuteAsync(ICommandBuilder command)
+    public static async Task<CommandResult> ExecuteAsync(ICommandBuilder command)
     {
         // 1. Validierung prüfen
         var report = command.Validate();
@@ -23,8 +24,11 @@ public static class CommandExecutor
             Console.WriteLine("Ausführung abgebrochen wegen Fehlern:");
             foreach (var err in report.Errors) Console.WriteLine($" - {err}");
             Console.ResetColor();
-            return;
+            return new CommandResult { ExitCode = -1, Error = "Validation failed" };
         }
+
+        var outputBuilder = new StringBuilder();
+        var errorBuilder = new StringBuilder();
 
         // 2. Befehl vorbereiten
         var commandText = command.Build();
@@ -43,8 +47,21 @@ public static class CommandExecutor
 
         using var process = new Process { StartInfo = psi };
 
-        process.OutputDataReceived += (s, e) => { if (e.Data != null) Console.WriteLine(e.Data); };
-        process.ErrorDataReceived += (s, e) => { if (e.Data != null) Console.Error.WriteLine($"[ERROR] {e.Data}"); };
+        process.OutputDataReceived += (s, e) => 
+        { 
+            if (e.Data != null) 
+            {
+                Console.WriteLine(e.Data);
+                outputBuilder.AppendLine(e.Data);
+            }
+        };
+        process.ErrorDataReceived += (s, e) => 
+        { 
+            if (e.Data != null) 
+            {
+                errorBuilder.AppendLine(e.Data);
+            }
+        };
 
         process.Start();
         process.BeginOutputReadLine();
@@ -52,9 +69,11 @@ public static class CommandExecutor
 
         await process.WaitForExitAsync();
         
-        if (process.ExitCode == 0)
-            Console.WriteLine("✅ Befehl erfolgreich beendet.");
-        else
-            Console.WriteLine($"❌ Befehl beendet mit Code: {process.ExitCode}");
+        return new CommandResult 
+        { 
+            ExitCode = process.ExitCode, 
+            Output = outputBuilder.ToString().Trim(),
+            Error = errorBuilder.ToString().Trim()
+        };
     }
 }
