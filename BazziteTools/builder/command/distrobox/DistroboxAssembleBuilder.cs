@@ -2,17 +2,17 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
 
-public class DistroboxAssembleBuilderBuilder : LinuxCommandBuilderBuilder<DistroboxAssembleBuilderBuilder>
+public class DistroboxAssembleBuilder : LinuxCommandBuilder<DistroboxAssembleBuilder>
 {
-    public DistroboxAssembleBuilderBuilder() : base("distrobox") => AddArgument("assemble");
+    public DistroboxAssembleBuilder() : base("distrobox") => AddArgument("assemble");
 
-    public DistroboxAssembleBuilderBuilder Create()
+    public DistroboxAssembleBuilder Create()
     {
         AddArgument("create");
         return this;
     }
 
-    public DistroboxAssembleBuilderBuilder File(string path)
+    public DistroboxAssembleBuilder File(string path)
     {
         AddLongOption("file", path);
         return this;
