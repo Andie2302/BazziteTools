@@ -30,11 +30,12 @@ public class FlatpakInstallBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakIn
     {
         AddLongOption("user");
         return this;
-    }public override bool IsValid(out List<string> errors)
+    }
+
+    public override CommandReport Validate()
     {
-        errors = [];
-        // Die App-ID ist bei dir das erste oder zweite Argument
-        if (!_arguments.Any()) errors.Add("Keine Flatpak App-ID angegeben.");
-        return errors.Count == 0;
+        var report = new CommandReport();
+        if (Arguments.Count == 0) report.AddError("Keine Flatpak App-ID angegeben.");
+        return report;
     }
 }
