@@ -5,22 +5,22 @@ using BazziteTools.builder.command.distrobox.images;
 
 Console.WriteLine("Hello, World!");
 
-const string DefaultBoxName = "ki";
-const string InstallerUrl = "https://openclaw.ai/install.sh";
+const string defaultBoxName = "ki";
+const string installerUrl = "https://openclaw.ai/install.sh";
 
 var createCmd = new DistroboxCreateBuilder()
     .WithLatestImage(DistroboxImage.Ubuntu)
     .UseNvidia()
-    .WithName(DefaultBoxName)
+    .WithName(defaultBoxName)
     .Build();
-var enterCmd = new DistroboxEnterBuilder(DefaultBoxName)
+var enterCmd = new DistroboxEnterBuilder(defaultBoxName)
     .WithCommand("nvidia-smi")
     .Build();
-var rmCmd = new DistroboxRemoveBuilder(DefaultBoxName)
+var rmCmd = new DistroboxRemoveBuilder(defaultBoxName)
     .Force()
     .Build();
 // ... existing code ...
-var installerCmd = Net.Download(InstallerUrl)
+var installerCmd = Net.Download(installerUrl)
     .Fail()
     .Silent()
     .ShowError()
@@ -33,7 +33,7 @@ Console.WriteLine(finalShellCommand);
 
 
 // 1. Curl-Teil bauen
-var curl = new CurlBuilder(InstallerUrl)
+var curl = new CurlBuilder(installerUrl)
     .ForInstallation();
 // 2. Bash-Teil bauen (Generic)
 var bash = new GenericCommandBuilder("bash");
