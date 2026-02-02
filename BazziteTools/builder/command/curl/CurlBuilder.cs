@@ -2,31 +2,55 @@ namespace BazziteTools.builder.command.curl;
 
 using BazziteTools.builder.command.@base;
 
+/// <summary>
+/// Ein spezialisierter Builder für curl-Befehle.
+/// </summary>
 public class CurlBuilder : LinuxCommandBuilder<CurlBuilder>
 {
-    // Die URL ist fast immer Pflicht, also ab in den Konstruktor
+    /// <summary>
+    /// Erstellt eine neue Instanz des CurlBuilders mit einer Ziel-URL.
+    /// Da curl ohne Ziel nichts tut, wird die URL im Konstruktor erzwungen.
+    /// </summary>
+    /// <param name="url">Die Ziel-URL für den Datentransfer.</param>
     public CurlBuilder(string url) : base("curl")
     {
         AddArgument(url);
     }
 
-    // -f, --fail: Bricht ab, wenn der Server einen Fehler (z.B. 404) meldet
+    /// <summary>
+    /// -f, --fail: Bricht bei Server-Fehlern (z.B. HTTP 404) sofort ab, ohne HTML-Fehlermeldungen auszugeben.
+    /// </summary>
     public CurlBuilder Fail() => AddLongOption("fail");
 
-    // -s, --silent: Keine Fortschrittsanzeige (gut für Skripte)
+    /// <summary>
+    /// -s, --silent: Deaktiviert die Fortschrittsanzeige und Statusmeldungen.
+    /// </summary>
     public CurlBuilder Silent() => AddLongOption("silent");
 
-    // -S, --show-error: Zeigt Fehler trotzdem an, auch wenn silent aktiv ist
+    /// <summary>
+    /// -S, --show-error: Zeigt Fehlermeldungen an, auch wenn der Silent-Modus aktiv ist.
+    /// </summary>
     public CurlBuilder ShowError() => AddLongOption("show-error");
 
-    // -L, --location: Folgt Weiterleitungen (sehr wichtig für install.sh Downloads)
+    /// <summary>
+    /// -L, --location: Folgt HTTP-Weiterleitungen (Redirects).
+    /// </summary>
     public CurlBuilder FollowLocation() => AddLongOption("location");
 
-    // -o, --output <file>: Speichert das Ergebnis in einer Datei
+    /// <summary>
+    /// -o, --output: Speichert die heruntergeladenen Daten in der angegebenen Datei statt im Standard-Output.
+    /// </summary>
+    /// <param name="filePath">Der Zielpfad für die Datei.</param>
     public CurlBuilder Output(string filePath) => AddLongOption("output", filePath);
 
-    // -A, --user-agent <name>: Gibt sich als ein bestimmter Browser aus
+    /// <summary>
+    /// -A, --user-agent: Setzt den User-Agent Header für die Anfrage.
+    /// </summary>
+    /// <param name="agent">Der Name des User-Agents.</param>
     public CurlBuilder UserAgent(string agent) => AddLongOption("user-agent", agent);
-    
+
+    /// <summary>
+    /// Kombiniert die Standard-Flags für die Installation von Online-Skripten (-fsSL).
+    /// </summary>
     public CurlBuilder ForInstallation() => Fail().Silent().ShowError().FollowLocation();
 }
