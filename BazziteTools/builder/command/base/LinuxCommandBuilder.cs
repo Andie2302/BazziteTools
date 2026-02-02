@@ -127,9 +127,7 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T :
     {
         var parts = fullCommand.Split(' ', 2);
         return (parts[0], parts.Length > 1 ? parts[1] : "");
-    }public virtual bool IsValid(out List<string> errors)
-    {
-        errors = [];
-        return true; 
     }
+
+    public abstract bool IsValid(out List<string> errors);
 }
