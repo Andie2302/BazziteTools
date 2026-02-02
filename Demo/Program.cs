@@ -2,6 +2,7 @@
 using BazziteTools.builder.command.curl;
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
+using BazziteTools.builder.command.filesystem;
 using BazziteTools.builder.command.flatpak;
 using BazziteTools.builder.command.rpmostree;
 
@@ -128,3 +129,10 @@ if(report2.IsSuccess)
 {
     Console.WriteLine($"Befehl: {installGit.Build()}");
 }
+
+// Einen Ordner mit Sudo erstellen und ein Skript darin ausführbar machen
+var setupScript = FileSystem.CreateDirectory("/usr/local/bin/mytool").CreateParents().AsRoot();
+var makeExec = FileSystem.ChangePermissions("/usr/local/bin/mytool/run.sh").MakeExecutable().AsRoot();
+
+Console.WriteLine(setupScript.Build());
+Console.WriteLine(makeExec.Build());
