@@ -13,4 +13,13 @@ public class CommandReport
 
     public bool IsSuccess => _errors.Count == 0;
     public bool HasWarnings => _warnings.Count > 0;
+
+    public void AddErrors(IReadOnlyList<string> errorMessages)
+    {
+        _errors.AddRange(errorMessages);
+    }
+    public void AddWarnings(IReadOnlyList<string> warningMessages)
+    {
+        _warnings.AddRange(warningMessages);
+    }
 }
