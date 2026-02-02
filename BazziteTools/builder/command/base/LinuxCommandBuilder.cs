@@ -9,7 +9,7 @@ namespace BazziteTools.builder.command.@base;
 /// This class serves as a foundational component for constructing commands with
 /// arguments, options, and other syntax required for executing shell operations.
 /// </summary>
-public class LinuxCommandBuilder(string binary)
+public abstract class LinuxCommandBuilder<T>(string binary) where T : LinuxCommandBuilder<T>
 {
     private readonly List<string> _arguments = [];
 
@@ -17,8 +17,8 @@ public class LinuxCommandBuilder(string binary)
     /// Adds a command argument token to the internal list of arguments for the Linux command being constructed.
     /// </summary>
     /// <param name="arg">The argument token to add to the command.</param>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    public LinuxCommandBuilder AddArgument(string arg)
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    public T AddArgument(string arg)
     {
         return AddToken(arg);
     }
@@ -29,12 +29,12 @@ public class LinuxCommandBuilder(string binary)
     /// </summary>
     /// <param name="option">The character representing the short option to add to the command.</param>
     /// <param name="value">The optional value to associate with the short option. If null, only the option will be added.</param>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    public LinuxCommandBuilder AddShortOption(char option, string? value = null) 
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    public T AddShortOption(char option, string? value = null) 
     {
         AddToken($"-{option}");
         if (value != null) AddToken(value);
-        return this;
+        return (T) this;
     }
 
     /// <summary>
@@ -43,11 +43,11 @@ public class LinuxCommandBuilder(string binary)
     /// <param name="option">The name of the long-form option (without the leading '--').</param>
     /// <param name="value">An optional value associated with the option. If null, the option will be added without a value.</param>
     /// <param name="separator">The character used to separate the option from its value if the value is provided.</param>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    public LinuxCommandBuilder AddLongOption(string option, string? value = null, char separator = ' ')
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    public T AddLongOption(string option, string? value = null, char separator = ' ')
     {
         _arguments.Add(FormatLongOption(option, value, separator));
-        return this;
+        return (T) this;
     }
 
     /// <summary>
@@ -87,8 +87,8 @@ public class LinuxCommandBuilder(string binary)
     /// Unlike other methods that process options or flags, this method directly appends the raw argument as-is.
     /// </summary>
     /// <param name="arg">The raw argument token to add to the command.</param>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    public LinuxCommandBuilder AddRawArgument(string arg)
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    public T AddRawArgument(string arg)
     {
         return AddToken(arg);
     }
@@ -98,8 +98,8 @@ public class LinuxCommandBuilder(string binary)
     /// This is commonly used to indicate the end of command options and
     /// the beginning of positional arguments in Linux shell commands.
     /// </summary>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    public LinuxCommandBuilder AddCommandSeparator()
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    public T AddCommandSeparator()
     {
         return AddToken("--");
     }
@@ -135,11 +135,11 @@ public class LinuxCommandBuilder(string binary)
     /// Adds a token to the internal list of arguments for the Linux command being constructed.
     /// </summary>
     /// <param name="token">The token to add to the command arguments.</param>
-    /// <returns>The <see cref="LinuxCommandBuilder"/> instance for method chaining.</returns>
-    private LinuxCommandBuilder AddToken(string token)
+    /// <returns>The <see cref="T"/> instance for method chaining.</returns>
+    private T AddToken(string token)
     {
         _arguments.Add(token);
-        return this;
+        return (T) this;
     }
 
     /// <summary>
