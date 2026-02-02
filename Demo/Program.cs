@@ -3,6 +3,7 @@ using BazziteTools.builder.command.curl;
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.flatpak;
+using BazziteTools.builder.command.rpmostree;
 
 Console.WriteLine("Hello, World!");
 
@@ -111,3 +112,11 @@ if (report.HasWarnings)
 }
 
 Console.ResetColor();
+
+// Ein rpm-ostree upgrade mit sudo
+var upgradeCommand = new RpmOstreeBuilder()
+    .Upgrade()
+    .WithSudo(); // Hier wird der SudoBuilder drumherum gewickelt
+
+Console.WriteLine($"Update-Befehl: {upgradeCommand.Build()}");
+// Ergibt: sudo rpm-ostree upgrade
