@@ -51,4 +51,14 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder<DistroboxCreateBuilder
 
         return report;
     }
+    
+    public DistroboxCreateBuilder WithPackages(params string[] packages)
+    {
+        if (packages.Length > 0)
+        {
+            AddLongOption("additional-packages", string.Join(" ", packages));
+        }
+        return this;
+    }
+    
 }
