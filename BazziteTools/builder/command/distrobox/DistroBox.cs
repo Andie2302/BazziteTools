@@ -8,4 +8,5 @@ public static class DistroBox
 
     public static DistroboxUpgradeBuilder Upgrade() => new();
     public static DistroboxAssembleBuilder Assemble() => new();
+    public static DistroboxListBuilder List() => new DistroboxListBuilder();
 }
