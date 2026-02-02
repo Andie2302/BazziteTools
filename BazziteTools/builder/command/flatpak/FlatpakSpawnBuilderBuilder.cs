@@ -2,14 +2,14 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.flatpak;
 
-public class FlatpakSpawnBuilder : LinuxCommandBuilder<FlatpakSpawnBuilder>
+public class FlatpakSpawnBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakSpawnBuilderBuilder>
 {
-    public FlatpakSpawnBuilder() : base("flatpak-spawn")
+    public FlatpakSpawnBuilderBuilder() : base("flatpak-spawn")
     {
         AddLongOption("host");
     }
 
-    public FlatpakSpawnBuilder Wrap(string command)
+    public FlatpakSpawnBuilderBuilder Wrap(string command)
     {
         AddRawArgument(command);
         return this;
