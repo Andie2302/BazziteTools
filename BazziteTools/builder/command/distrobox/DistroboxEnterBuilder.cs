@@ -1,8 +1,7 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
-
-public class DistroboxEnterBuilder : LinuxCommandBuilder
+public class DistroboxEnterBuilder : LinuxCommandBuilder<DistroboxEnterBuilder>
 {
     public DistroboxEnterBuilder(string containerName) : base("distrobox")
     {
