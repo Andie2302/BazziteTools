@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using BazziteTools;
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 
