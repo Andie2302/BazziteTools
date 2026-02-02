@@ -31,11 +31,9 @@ public class DistroboxBuilder
 
     public DistroboxBuilder WithPackages(params string[] packages)
     {
-        if (packages.Length > 0)
-        {
-            _args.Add("--additional-packages");
-            _args.Add($"\"{string.Join(" ", packages)}\"");
-        }
+        if (packages.Length <= 0) return this;
+        _args.Add("--additional-packages");
+        _args.Add($"\"{string.Join(" ", packages)}\"");
         return this;
     }
 
