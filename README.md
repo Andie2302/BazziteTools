@@ -9,7 +9,7 @@ Dieses Projekt ermöglicht es, komplexe Linux-Systembefehle (Distrobox, Flatpak,
 - **Smart Validation**: Erkennt Fehler (z.B. fehlende Parameter) vor der Ausführung und gibt Warnungen aus (z.B. bei Sudo-Nutzung).
 - **Command Executor**: Führt Befehle asynchron in der Bash aus und liefert Exit-Codes sowie Output zurück.
 - **Output Interpreters**: Verwandelt Text-Ausgaben der Shell in echte C#-Objekte (z.B. Distrobox-Container-Listen).
-- **Hardware Aware**: Spezielle Integration für **NVIDIA GPUs** (RTX 5060 Ti Support) zum Auslesen von Temperatur und Auslastung.
+- **Hardware Aware**: Spezielle Integration für **NVIDIA GPUs** (RTX 5060 Ti Support) zum Auslesen von Temperatur.
 - **Bazzite Optimized**: Unterstützung für `rpm-ostree` Layering und `flatpak-spawn` Host-Kommunikation.
 
 ## 📦 Architektur
