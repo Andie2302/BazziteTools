@@ -62,12 +62,15 @@ public class CurlBuilderBuilder : LinuxCommandBuilderBuilder<CurlBuilderBuilder>
         if (string.IsNullOrWhiteSpace(url))
         {
             report.AddError("Ziel-URL fehlt.");
+            return report;
         }
-        else if (url.StartsWith("http://") || url.StartsWith("ftp://") || url.StartsWith("ws://"))
+
+        // Warnung bei unsicheren Protokollen
+        if (url.StartsWith("http://") || url.StartsWith("ftp://") || url.StartsWith("ws://"))
         {
-            report.AddWarning($"Die URL '{url}' nutzt ein unverschlüsseltes Protokoll. In öffentlichen Netzen ist das riskant.");
+            report.AddWarning($"Sicherheits-Hinweis: Die URL nutzt ein unverschlüsseltes Protokoll ({url.Split(':')[0]}).");
         }
-    
+
         return report;
     }
 
