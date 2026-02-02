@@ -57,3 +57,15 @@ Console.WriteLine($"Generierter Befehl: {builder.Build()}");
 
 // Führt den Befehl aus und zeigt dir live, wie Ubuntu heruntergeladen wird
 await builder.ExecuteAsync();
+
+// Beispiel: Discord via Flathub installieren
+var installCmd = FlatPak.Install("com.discordapp.Discord")
+    .From("flathub")
+    .AssumeYes()
+    .User()
+    .Build();
+
+Console.WriteLine($"Install-Befehl: {installCmd}");
+
+// Wenn du ExecuteAsync bereits implementiert hast:
+// await FlatPak.Install("com.discordapp.Discord").AssumeYes().ExecuteAsync();
