@@ -1,4 +1,5 @@
-﻿using BazziteTools.builder.command.curl;
+﻿using BazziteTools.builder.command.@base;
+using BazziteTools.builder.command.curl;
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.flatpak;
