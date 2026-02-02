@@ -17,26 +17,11 @@ public class ShellPipelineBuilder : ICommandBuilder
     public CommandReport Validate()
     {
         var report = new CommandReport();
-        foreach (var command in _commands)
+        foreach (var cmdErrors in _commands.Select(command => command.Validate()).Where(cmdErrors => !cmdErrors.IsSuccess))
         {
-            if (!command.IsValid(out var cmdErrors))
-            {
-                report.AddErrors(cmdErrors);
-            }
+            report.AddErrors(cmdErrors.Errors);
         }
         return report;
     }
-
-    public bool IsValid(out CommandReport commandReport)
-    {
-        commandReport = new CommandReport();
-        foreach (var command in _commands)
-        {
-            if (!command.IsValid(out var cmdErrors))
-            {
-                errors.AddRange(cmdErrors);
-            }
-        }
-        return commandReport.IsSuccess;
-    }
+    
 }
