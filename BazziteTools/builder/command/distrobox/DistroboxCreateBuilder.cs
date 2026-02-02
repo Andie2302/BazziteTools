@@ -32,4 +32,20 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder<DistroboxCreateBuilder
         AddLongOption("name", distroboxName);
         return this;
     }
+    
+    public override bool IsValid(out List<string> errors)
+    {
+        errors = [];
+    
+        // Wir prüfen, ob die Tokens in der internen Liste vorhanden sind
+        // Da wir die Argumente über AddLongOption hinzufügen, suchen wir nach den Flags
+        bool hasName = _arguments.Any(a => a.StartsWith("--name"));
+        bool hasImage = _arguments.Any(a => a.StartsWith("--image"));
+
+        if (!hasName) errors.Add("Ein Container-Name muss mit .WithName() angegeben werden.");
+        if (!hasImage) errors.Add("Ein Image muss mit .WithImage() angegeben werden.");
+
+        return errors.Count == 0;
+    }
+    
 }
