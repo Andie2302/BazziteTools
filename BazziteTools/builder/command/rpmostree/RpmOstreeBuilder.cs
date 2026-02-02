@@ -4,12 +4,19 @@ namespace BazziteTools.builder.command.rpmostree;
 
 public class RpmOstreeBuilder : LinuxCommandBuilder<RpmOstreeBuilder>
 {
-    public RpmOstreeBuilder() : base("rpm-ostree") { }
+    public RpmOstreeBuilder() : base("rpm-ostree")
+    {
+    }
 
-    public RpmOstreeBuilder Install(string packageName)
+// In RpmOstreeBuilder.cs
+    public RpmOstreeBuilder Install(params string[] packageNames)
     {
         AddArgument("install");
-        AddArgument(packageName);
+        foreach (var pkg in packageNames)
+        {
+            AddArgument(pkg);
+        }
+
         return this;
     }
 
@@ -29,16 +36,18 @@ public class RpmOstreeBuilder : LinuxCommandBuilder<RpmOstreeBuilder>
     public override CommandReport Validate()
     {
         var report = new CommandReport();
-        
-        if (!Arguments.Any())
+
+        if (Arguments.Count == 0)
         {
-            report.AddError("Keine Aktion für rpm-ostree festgelegt (z.B. Install oder Upgrade).");
+            report.AddError("Es wurde keine Aktion für rpm-ostree festgelegt.");
+            return report;
         }
 
-        // Best Practice Hinweis für Bazzite-Nutzer
+        // Warnung, wenn kein Reboot-Management geplant ist
         if (Arguments.Contains("install") && !Arguments.Contains("--apply-live"))
         {
-            report.AddWarning("Änderungen am System-Layer erfordern in der Regel einen Neustart, um aktiv zu werden.");
+            report.AddWarning(
+                "Hinweis: Diese Installation wird erst nach einem Neustart aktiv, außer du nutzt .ApplyLive().");
         }
 
         return report;
