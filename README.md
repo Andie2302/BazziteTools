@@ -57,7 +57,7 @@ if (result.Success) {
 ### System-Ordner sicher vorbereiten (Workflow)
 
 ```csharp
-var setup = FileSystemWorkflows.PrepareAdminFolder("/tmp/mytool", "andreas");
+var setup = FileSystemWorkflows.PrepareAdminFolder("/tmp/mytool", "username");
 await CommandExecutor.ExecuteAsync(setup);
 
 ```
