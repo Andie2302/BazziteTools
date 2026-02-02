@@ -8,7 +8,7 @@ namespace BazziteTools.builder.command.@base;
 /// This class serves as a foundational component for constructing commands with
 /// arguments, options, and other syntax required for executing shell operations.
 /// </summary>
-public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T : LinuxCommandBuilder<T>{
+public abstract class LinuxCommandBuilderBuilder<T>(string binary) : ICommandBuilder where T : LinuxCommandBuilderBuilder<T>{
     protected readonly List<string> _arguments = [];
 
     /// <summary>
@@ -80,6 +80,11 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T :
         return PlatformEnvironment.IsFlatpak ? $"flatpak-spawn --host {baseCommand}" : baseCommand;
     }
 
+    public bool IsValid(out List<string> errors)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Adds a raw command argument token to the internal list of arguments for the Linux command being constructed.
     /// Unlike other methods that process options or flags, this method directly appends the raw argument as-is.
@@ -130,5 +135,5 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T :
         return (parts[0], parts.Length > 1 ? parts[1] : "");
     }
 
-    public abstract bool IsValid(out ValidationResult validationResult);
+    
 }
