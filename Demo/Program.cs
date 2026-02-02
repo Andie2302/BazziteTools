@@ -112,11 +112,19 @@ if (report.HasWarnings)
 }
 
 Console.ResetColor();
-
-// Ein rpm-ostree upgrade mit sudo
-var upgradeCommand = new RpmOstreeBuilder()
+// System-Update durchführen
+var sysUpdate = SystemHost.RpmOstree()
     .Upgrade()
-    .WithSudo(); // Hier wird der SudoBuilder drumherum gewickelt
+    .AsRoot(); // Statt .WithSudo()
 
-Console.WriteLine($"Update-Befehl: {upgradeCommand.Build()}");
-// Ergibt: sudo rpm-ostree upgrade
+// Paket installieren
+var installGit = SystemHost.RpmOstree()
+    .Install("git")
+    .AsRoot();
+
+// Validierung und Ausgabe
+var report2 = installGit.Validate();
+if(report2.IsSuccess) 
+{
+    Console.WriteLine($"Befehl: {installGit.Build()}");
+}
