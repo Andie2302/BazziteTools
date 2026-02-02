@@ -15,11 +15,25 @@ public class LinuxCommandBuilder(string binary)
     }
 
     // Fügt --long-option hinzu
+    // In LinuxCommandBuilder.cs
     public void AddLongOption(string option, string? value = null, char separator = ' ')
     {
-        if (value != null) _parts.Add($"--{option}{separator}{value}"); // Oder mit Leerzeichen
-        else _parts.Add($"--{option}");
+        if (value != null) 
+        {
+            // Einfaches Quoting für Werte mit Leerzeichen
+            var formattedValue = value.Contains(' ') ? $"\"{value}\"" : value;
+            _parts.Add($"--{option}{separator}{formattedValue}");
+        }
+        else 
+        {
+            _parts.Add($"--{option}");
+        }
     }
 
     public string Build() => $"{binary} {string.Join(" ", _parts)}";
+    
+    public void AddRawArgument(string arg) => _parts.Add(arg);
+
+    public void AddCommandSeparator() => _parts.Add("--");
+    
 }
