@@ -2,6 +2,7 @@
 using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.flatpak;
+using BazziteTools.builder.command.shell;
 
 Console.WriteLine("Hello, World!");
 
@@ -68,3 +69,15 @@ var installerCmd = Net.Download("https://openclaw.ai/install.sh")
 
 var finalShellCommand = $"{installerCmd} | bash";
 Console.WriteLine(finalShellCommand);
+
+
+
+var curl = new CurlBuilder("https://openclaw.ai/install.sh").ForInstallation();
+var bash = new GenericCommandBuilder("bash"); // Ein einfacher Builder für bash
+
+var pipeline = new ShellPipelineBuilder()
+    .Pipe(curl)
+    .Pipe(bash)
+    .Build();
+
+// Ergebnis: curl ... --location | bash
