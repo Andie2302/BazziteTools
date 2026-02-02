@@ -1,3 +1,4 @@
+using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.flatpak;
 
 namespace BazziteTools.builder.command.@base;
@@ -129,5 +130,5 @@ public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T :
         return (parts[0], parts.Length > 1 ? parts[1] : "");
     }
 
-    public abstract bool IsValid(out List<string> errors);
+    public abstract bool IsValid(out ValidationResult validationResult);
 }
