@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BazziteTools", "BazziteTools\BazziteTools.csproj", "{82170AE3-3C98-4ED5-8C5A-5168B4B8401A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{12AC24A5-281E-446F-8323-D3FE76204D3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{82170AE3-3C98-4ED5-8C5A-5168B4B8401A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82170AE3-3C98-4ED5-8C5A-5168B4B8401A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82170AE3-3C98-4ED5-8C5A-5168B4B8401A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12AC24A5-281E-446F-8323-D3FE76204D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12AC24A5-281E-446F-8323-D3FE76204D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12AC24A5-281E-446F-8323-D3FE76204D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12AC24A5-281E-446F-8323-D3FE76204D3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
