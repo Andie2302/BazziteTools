@@ -7,17 +7,17 @@ using BazziteTools.builder.command.flatpak;
 Console.WriteLine("Hello, World!");
 
 
-var createCmd = new DistroboxCreateBuilderBuilder()
+var createCmd = new DistroboxCreateBuilder()
     .WithLatestImage(DistroboxImage.Ubuntu)
     .UseNvidia()
     .WithName("ki")
     .Build();
 
-var enterCmd = new DistroboxEnterBuilderBuilder("ki")
+var enterCmd = new DistroboxEnterBuilder("ki")
     .WithCommand("nvidia-smi")
     .Build();
 
-var rmCmd = new DistroboxRemoveBuilderBuilder("ki")
+var rmCmd = new DistroboxRemoveBuilder("ki")
     .Force()
     .Build();
 
@@ -31,12 +31,12 @@ Console.WriteLine($"Remove: {rmCmd}");
 Console.WriteLine($"Upgrade: {upgradeCmd}");
 Console.WriteLine($"Assemble: {assembleCmd}");
 
-var distroboxCmd = new DistroboxCreateBuilderBuilder()
+var distroboxCmd = new DistroboxCreateBuilder()
     .WithName("ki-box")
     .WithLatestImage(DistroboxImage.Ubuntu)
     .Build();
 
-var finalCmd = new FlatpakSpawnBuilderBuilder()
+var finalCmd = new FlatpakSpawnBuilder()
     .Wrap(distroboxCmd)
     .Build();
 Console.WriteLine(finalCmd);
@@ -74,18 +74,18 @@ Console.WriteLine(finalShellCommand);
 
 
 // 1. Curl-Teil bauen
-var curl = new CurlBuilderBuilder("https://openclaw.ai/install.sh")
+var curl = new CurlBuilder("https://openclaw.ai/install.sh")
     .ForInstallation();
 
 // 2. Bash-Teil bauen (Generic)
-var bash = new GenericCommandBuilderBuilder("bash");
+var bash = new GenericCommandBuilder("bash");
 
 // 3. Pipeline erstellen
 
 // Statt manuell die Pipeline zu bauen, nutzt du einfach PipeTo:
-var pipeline = new CurlBuilderBuilder("https://openclaw.ai/install.sh")
+var pipeline = new CurlBuilder("https://openclaw.ai/install.sh")
     .ForInstallation()
-    .PipeTo(new GenericCommandBuilderBuilder("bash"));
+    .PipeTo(new GenericCommandBuilder("bash"));
 Console.WriteLine($"Pipeline-Befehl: {pipeline.Build()}");
 
 var xxx=DistroBox.Create().Build();
