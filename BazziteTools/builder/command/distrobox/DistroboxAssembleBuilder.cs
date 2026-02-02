@@ -2,7 +2,7 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
 
-public class DistroboxAssembleBuilder : LinuxCommandBuilder
+public class DistroboxAssembleBuilder : LinuxCommandBuilder<DistroboxAssembleBuilder>
 {
     public DistroboxAssembleBuilder() : base("distrobox") => AddArgument("assemble");
 
