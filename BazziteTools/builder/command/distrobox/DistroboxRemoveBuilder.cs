@@ -2,21 +2,21 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
 
-public class DistroboxRemoveBuilderBuilder : LinuxCommandBuilderBuilder<DistroboxRemoveBuilderBuilder>
+public class DistroboxRemoveBuilder : LinuxCommandBuilder<DistroboxRemoveBuilder>
 {
-    public DistroboxRemoveBuilderBuilder(string containerName) : base("distrobox")
+    public DistroboxRemoveBuilder(string containerName) : base("distrobox")
     {
         AddArgument("rm");
         AddArgument(containerName);
     }
 
-    public DistroboxRemoveBuilderBuilder Force()
+    public DistroboxRemoveBuilder Force()
     {
         AddLongOption("force");
         return this;
     }
 
-    public DistroboxRemoveBuilderBuilder Root()
+    public DistroboxRemoveBuilder Root()
     {
         AddLongOption("root");
         return this;
