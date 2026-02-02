@@ -22,12 +22,10 @@ public class DistroboxEnterBuilderBuilder : LinuxCommandBuilderBuilder<Distrobox
         return this;
     }
     
-    public override bool IsValid(out List<string> errors)
+    public override CommandReport Validate()
     {
-        errors = [];
-        // Wir prüfen, ob ein Argument vorhanden ist, das nicht mit "-" startet (der Container-Name)
-        // oder ob ein Name-Flag gesetzt wurde.
-        if (!_arguments.Any()) errors.Add("Kein Container-Name angegeben.");
-        return errors.Count == 0;
+        var report = new CommandReport();
+        if (Arguments.Count == 0) report.AddError("Kein Container-Name angegeben.");
+        return report;
     }
 }
