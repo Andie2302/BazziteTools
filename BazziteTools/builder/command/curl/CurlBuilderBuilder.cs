@@ -54,33 +54,22 @@ public class CurlBuilderBuilder : LinuxCommandBuilderBuilder<CurlBuilderBuilder>
     /// </summary>
     public CurlBuilderBuilder ForInstallation() => Fail().Silent().ShowError().FollowLocation();
     
-    public override bool IsValid(out List<string> errors)
+    public override CommandReport Validate()
     {
-        errors = [];
-        var url = _arguments.FirstOrDefault();
+        var report = new CommandReport();
+        var url = Arguments.FirstOrDefault();
 
         if (string.IsNullOrWhiteSpace(url))
         {
-            errors.Add("Curl benötigt eine Ziel-URL.");
-            return false;
+            report.AddError("Ziel-URL fehlt.");
         }
-
-        // Erlaubte Protokolle prüfen
-        string[] allowedProtocols = { "http://", "https://", "ftp://", "ftps://", "sftp://", "ws://", "wss://" };
+        else if (url.StartsWith("http://") || url.StartsWith("ftp://") || url.StartsWith("ws://"))
+        {
+            report.AddWarning($"Die URL '{url}' nutzt ein unverschlüsseltes Protokoll. In öffentlichen Netzen ist das riskant.");
+        }
     
-        if (!allowedProtocols.Any(p => url.StartsWith(p)))
-        {
-            errors.Add($"Das Protokoll der URL '{url}' wird nicht unterstützt oder ist unsicher.");
-        }
-
-        // Sicherheits-Hinweis für Andreas
-        if (url.StartsWith("http://") || url.StartsWith("ftp://") || url.StartsWith("ws://"))
-        {
-            // Wir lassen es durch, geben aber eine Warnung in die Liste
-            // (Hier könnte man überlegen, ob man eine separate 'Warnings'-Liste einführt)
-        }
-
-        return errors.Count == 0;
+        return report;
     }
-    
+
+   
 }
