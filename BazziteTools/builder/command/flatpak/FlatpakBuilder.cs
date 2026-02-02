@@ -2,20 +2,20 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.flatpak;
 
-public class FlatpakBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakBuilderBuilder>
+public class FlatpakBuilder : LinuxCommandBuilder<FlatpakBuilder>
 {
-    public FlatpakBuilderBuilder() : base("flatpak")
+    public FlatpakBuilder() : base("flatpak")
     {
     }
 
-    public FlatpakBuilderBuilder Run(string appId)
+    public FlatpakBuilder Run(string appId)
     {
         AddArgument("run");
         AddArgument(appId);
         return this;
     }
 
-    public FlatpakBuilderBuilder Install(string source, string appId)
+    public FlatpakBuilder Install(string source, string appId)
     {
         AddArgument("install");
         AddArgument(source);
@@ -23,13 +23,13 @@ public class FlatpakBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakBuilderBu
         return this;
     }
 
-    public FlatpakBuilderBuilder User()
+    public FlatpakBuilder User()
     {
         AddLongOption("user");
         return this;
     }
 
-    public FlatpakBuilderBuilder AssumeYes()
+    public FlatpakBuilder AssumeYes()
     {
         AddShortOption('y');
         return this;
