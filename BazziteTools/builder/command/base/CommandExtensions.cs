@@ -18,4 +18,5 @@ public static class CommandExtensions
     }
 
     public static ICommandBuilder WithSudo(this ICommandBuilder command) => new SudoBuilder(command);
+    
 }
