@@ -2,10 +2,10 @@ namespace BazziteTools.builder.command.distrobox;
 
 public static class DistroBox
 {
-    public static DistroboxCreateBuilderBuilder Create() => new();
-    public static DistroboxEnterBuilderBuilder Enter(string name) => new(name);
-    public static DistroboxRemoveBuilderBuilder Rm(string name) => new(name);
+    public static DistroboxCreateBuilder Create() => new();
+    public static DistroboxEnterBuilder Enter(string name) => new(name);
+    public static DistroboxRemoveBuilder Rm(string name) => new(name);
 
-    public static DistroboxUpgradeBuilderBuilder Upgrade() => new();
-    public static DistroboxAssembleBuilderBuilder Assemble() => new();
+    public static DistroboxUpgradeBuilder Upgrade() => new();
+    public static DistroboxAssembleBuilder Assemble() => new();
 }
