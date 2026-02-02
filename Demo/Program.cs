@@ -47,3 +47,13 @@ var finalCmd = new FlatpakSpawnBuilder()
 Console.WriteLine(finalCmd);
 
 // Ergebnis: flatpak-spawn --host distrobox create --name ki-box --image ubuntu:latest
+
+var builder = DistroBox.Create()
+    .WithName("ki-labor")
+    .WithLatestImage(DistroboxImage.Ubuntu)
+    .UseNvidia();
+
+Console.WriteLine($"Generierter Befehl: {builder.Build()}");
+
+// Führt den Befehl aus und zeigt dir live, wie Ubuntu heruntergeladen wird
+await builder.ExecuteAsync();
