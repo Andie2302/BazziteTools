@@ -2,9 +2,11 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.flatpak;
 
-public class FlatpakBuilder : LinuxCommandBuilder
+public class FlatpakBuilder : LinuxCommandBuilder<FlatpakBuilder>
 {
-    public FlatpakBuilder() : base("flatpak") { }
+    public FlatpakBuilder() : base("flatpak")
+    {
+    }
 
     public FlatpakBuilder Run(string appId)
     {
