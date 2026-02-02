@@ -2,13 +2,13 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.shell;
 
-public class ShellPipelineBuilder : ICommand
+public class ShellPipelineBuilder : ICommandBuilder
 {
-    private readonly List<ICommand> _commands = [];
+    private readonly List<ICommandBuilder> _commands = [];
 
-    public ShellPipelineBuilder Pipe(ICommand command)
+    public ShellPipelineBuilder Pipe(ICommandBuilder commandBuilder)
     {
-        _commands.Add(command);
+        _commands.Add(commandBuilder);
         return this;
     }
 
