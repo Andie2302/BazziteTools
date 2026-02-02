@@ -34,4 +34,5 @@ public class FlatpakBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakBuilderBu
         AddShortOption('y');
         return this;
     }
+    
 }
