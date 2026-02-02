@@ -1,4 +1,5 @@
-﻿using BazziteTools.builder.command.distrobox;
+﻿using BazziteTools.builder.command.curl;
+using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.flatpak;
 
@@ -53,3 +54,17 @@ var installCmd = FlatPak.Install("com.discordapp.Discord")
     .Build();
 
 Console.WriteLine($"Install-Befehl: {installCmd}");
+
+
+var installerCmd = Net.Download("https://openclaw.ai/install.sh")
+    .Fail()
+    .Silent()
+    .ShowError()
+    .FollowLocation()
+    .Build();
+
+// Das Resultat ist: curl https://openclaw.ai/install.sh --fail --silent --show-error --location
+// (Die Reihenfolge der Argumente spielt bei curl meist keine Rolle)
+
+var finalShellCommand = $"{installerCmd} | bash";
+Console.WriteLine(finalShellCommand);
