@@ -8,7 +8,6 @@ public class DistroboxListBuilder : LinuxCommandBuilder<DistroboxListBuilder>
     {
         AddArgument("list");
         // CSV-Format macht das Parsen für C# extrem einfach
-        AddArgument("--csv");
     }
 
     public override CommandReport Validate()
