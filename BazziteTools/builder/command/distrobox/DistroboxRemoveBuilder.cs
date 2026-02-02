@@ -1,5 +1,3 @@
-using BazziteTools.builder.command.@base;
-
 namespace BazziteTools.builder.command.distrobox;
 
 public class DistroboxRemoveBuilder : LinuxCommandBuilder
