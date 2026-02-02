@@ -29,10 +29,7 @@ public class LinuxCommandBuilder(string binary)
             ? $"--{option}"
             : $"--{option}{separator}{QuoteIfNeeded(value)}";
 
-    private static string QuoteIfNeeded(string value)
-    {
-        return value.Contains(' ') ? $"\"{value}\"" : value;
-    }
+    private static string QuoteIfNeeded(string value) => value.Contains(' ') ? $"\"{value}\"" : value;
 
     public string Build() => $"{binary} {string.Join(" ", _arguments)}";
 
