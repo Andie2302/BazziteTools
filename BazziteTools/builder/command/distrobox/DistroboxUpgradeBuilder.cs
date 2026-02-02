@@ -1,17 +1,17 @@
 using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.builder.command.distrobox;
-public class DistroboxUpgradeBuilderBuilder : LinuxCommandBuilderBuilder<DistroboxUpgradeBuilderBuilder>
+public class DistroboxUpgradeBuilder : LinuxCommandBuilder<DistroboxUpgradeBuilder>
 {
-    public DistroboxUpgradeBuilderBuilder() : base("distrobox") => AddArgument("upgrade");
+    public DistroboxUpgradeBuilder() : base("distrobox") => AddArgument("upgrade");
 
-    public DistroboxUpgradeBuilderBuilder All()
+    public DistroboxUpgradeBuilder All()
     {
         AddLongOption("all");
         return this;
     }
 
-    public DistroboxUpgradeBuilderBuilder Name(string containerName)
+    public DistroboxUpgradeBuilder Name(string containerName)
     {
         AddArgument(containerName);
         return this;
