@@ -6,7 +6,6 @@ public static class FlatPak
     
     public static FlatpakSpawnBuilder Spawn() => new();
 
-    // Diese Methode hat gefehlt oder hatte den falschen Parameter:
     public static FlatpakInstallBuilder Install(string? appId = null)
     {
         var builder = new FlatpakInstallBuilder();
