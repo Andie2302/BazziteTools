@@ -1,3 +1,5 @@
+using BazziteTools.builder.command.@base;
+
 namespace BazziteTools.builder.command.flatpak;
 
 public class FlatpakSpawnBuilder : LinuxCommandBuilder
