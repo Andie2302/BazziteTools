@@ -34,5 +34,9 @@ public class FlatpakBuilderBuilder : LinuxCommandBuilderBuilder<FlatpakBuilderBu
         AddShortOption('y');
         return this;
     }
-    
+
+    public override CommandReport Validate()
+    {
+        throw new NotImplementedException();
+    }
 }
