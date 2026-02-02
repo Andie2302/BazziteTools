@@ -4,6 +4,7 @@ using BazziteTools.builder.command.distrobox;
 using BazziteTools.builder.command.distrobox.images;
 using BazziteTools.builder.command.filesystem;
 using BazziteTools.builder.command.flatpak;
+using BazziteTools.builder.command.hardware;
 using BazziteTools.builder.command.rpmostree;
 using BazziteTools.executor;
 
@@ -151,3 +152,18 @@ var fixOwner = new ChownBuilder("/tmp/andreas_test")
     .AsRoot();
 
 await CommandExecutor.ExecuteAsync(fixOwner);
+
+
+// 1. Workflow nutzen
+var prep = FileSystemWorkflows.PrepareAdminFolder("/tmp/ki-data", "andreas");
+await CommandExecutor.ExecuteAsync(prep);
+
+// 2. GPU Check
+var gpuCheck = new NvidiaSmiBuilder().QueryTemperature();
+var result = await CommandExecutor.ExecuteAsync(gpuCheck);
+
+if (result.Success && int.TryParse(result.Output, out int temp))
+{
+    Console.WriteLine($"\n🔥 Aktuelle GPU Temperatur: {temp}°C");
+    if(temp > 80) Console.WriteLine("⚠️ Ganz schön heiß hier!");
+}
