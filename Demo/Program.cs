@@ -73,12 +73,17 @@ Console.WriteLine(finalShellCommand);
 
 
 
-var curl = new CurlBuilder("https://openclaw.ai/install.sh").ForInstallation();
-var bash = new GenericCommandBuilder("bash"); // Ein einfacher Builder für bash
 
+// 1. Curl-Teil bauen
+var curl = new CurlBuilder("https://openclaw.ai/install.sh")
+    .ForInstallation();
+
+// 2. Bash-Teil bauen (Generic)
+var bash = new GenericCommandBuilder("bash");
+
+// 3. Pipeline erstellen
 var pipeline = new ShellPipelineBuilder()
     .Pipe(curl)
-    .Pipe(bash)
-    .Build();
+    .Pipe(bash);
 
-// Ergebnis: curl ... --location | bash
+Console.WriteLine($"Pipeline-Befehl: {pipeline.Build()}");
