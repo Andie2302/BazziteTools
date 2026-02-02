@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command.distrobox;
+namespace BazziteTools.builder.command.distrobox.images;
 
 public static class DistroboxImageExtensions
 {
