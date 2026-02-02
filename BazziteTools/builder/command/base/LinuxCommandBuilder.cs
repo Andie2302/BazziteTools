@@ -7,8 +7,7 @@ namespace BazziteTools.builder.command.@base;
 /// This class serves as a foundational component for constructing commands with
 /// arguments, options, and other syntax required for executing shell operations.
 /// </summary>
-public abstract class LinuxCommandBuilder<T>(string binary) where T : LinuxCommandBuilder<T>
-{
+public abstract class LinuxCommandBuilder<T>(string binary) : ICommand where T : LinuxCommandBuilder<T>{
     private readonly List<string> _arguments = [];
 
     /// <summary>
@@ -129,4 +128,9 @@ public abstract class LinuxCommandBuilder<T>(string binary) where T : LinuxComma
         var parts = fullCommand.Split(' ', 2);
         return (parts[0], parts.Length > 1 ? parts[1] : "");
     }
+}
+
+public interface ICommand
+{
+    string Build();
 }
