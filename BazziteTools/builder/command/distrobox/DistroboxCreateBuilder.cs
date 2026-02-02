@@ -4,31 +4,31 @@ using BazziteTools.builder.command.flatpak;
 
 namespace BazziteTools.builder.command.distrobox;
 
-public class DistroboxCreateBuilderBuilder : LinuxCommandBuilderBuilder<DistroboxCreateBuilderBuilder>
+public class DistroboxCreateBuilder : LinuxCommandBuilder<DistroboxCreateBuilder>
 {
-    public DistroboxCreateBuilderBuilder() : base("distrobox") => AddArgument("create");
+    public DistroboxCreateBuilder() : base("distrobox") => AddArgument("create");
 
-    public DistroboxCreateBuilderBuilder WithImage(string image)
+    public DistroboxCreateBuilder WithImage(string image)
     {
         AddLongOption("image", image);
         return this;
     }
 
-    public DistroboxCreateBuilderBuilder WithLatestImage(DistroboxImage image) => WithImage(image.ToImageString());
+    public DistroboxCreateBuilder WithLatestImage(DistroboxImage image) => WithImage(image.ToImageString());
 
-    public DistroboxCreateBuilderBuilder UseNvidia()
+    public DistroboxCreateBuilder UseNvidia()
     {
         AddLongOption("nvidia");
         return this;
     }
 
-    public DistroboxCreateBuilderBuilder WithHome(string path)
+    public DistroboxCreateBuilder WithHome(string path)
     {
         AddLongOption("home", path);
         return this;
     }
 
-    public DistroboxCreateBuilderBuilder WithName(string distroboxName)
+    public DistroboxCreateBuilder WithName(string distroboxName)
     {
         AddLongOption("name", distroboxName);
         return this;
