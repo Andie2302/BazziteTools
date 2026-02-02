@@ -33,26 +33,22 @@ public class DistroboxCreateBuilderBuilder : LinuxCommandBuilderBuilder<Distrobo
         AddLongOption("name", distroboxName);
         return this;
     }
-    
-    public override bool IsValid(out List<string> errors)
-    {
-        errors = [];
-    
-        // Wir prüfen, ob die Tokens in der internen Liste vorhanden sind
-        // Da wir die Argumente über AddLongOption hinzufügen, suchen wir nach den Flags
-        var hasName = _arguments.Any(a => a.StartsWith("--name"));
-        var hasImage = _arguments.Any(a => a.StartsWith("--image"));
 
-        if (!hasName) errors.Add("Ein Container-Name muss mit .WithName() angegeben werden.");
-        if (!hasImage) errors.Add("Ein Image muss mit .WithImage() angegeben werden.");
-        var wantsNvidia = _arguments.Contains("--nvidia");
+    public override CommandReport Validate()
+    {
+        var report = new CommandReport();
+        var hasName = Arguments.Any(a => a.StartsWith("--name"));
+        var hasImage = Arguments.Any(a => a.StartsWith("--image"));
+
+        if (!hasName) report.AddError("Ein Container-Name muss mit .WithName() angegeben werden.");
+        if (!hasImage) report.AddError("Ein Image muss mit .WithImage() angegeben werden.");
+        var wantsNvidia = Arguments.Contains("--nvidia");
 
         if (wantsNvidia && !PlatformEnvironment.IsNvidiaDriverLoaded)
         {
-            errors.Add("NVIDIA-Unterstützung wurde angefordert, aber der NVIDIA-Treiber wurde auf dem Host-System nicht gefunden.");
+            report.AddError("NVIDIA-Unterstützung wurde angefordert, aber der NVIDIA-Treiber wurde auf dem Host-System nicht gefunden.");
         }
 
-        return errors.Count == 0;
+        return report;
     }
-    
 }
