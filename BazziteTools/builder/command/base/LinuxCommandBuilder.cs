@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command;
+namespace BazziteTools.builder.command.@base;
 
 public class LinuxCommandBuilder(string binary)
 {
