@@ -194,3 +194,16 @@ if (result2.Success)
         Console.WriteLine($"{icon} {c.Name} ({c.Image})");
     }
 }
+
+// Befehl ausführen
+var result3 = await CommandExecutor.ExecuteAsync(DistroBox.List());
+
+// Ergebnis interpretieren (Dank Extension Method)
+var containers3 = result3.ToContainerList();
+
+// Damit arbeiten
+foreach (var container in containers3)
+{
+    var statusIcon = container.IsRunning ? "🟢" : "🔴";
+    Console.WriteLine($"{statusIcon} {container.Name}");
+}
