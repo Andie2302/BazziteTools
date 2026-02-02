@@ -2,6 +2,7 @@
 
 using BazziteTools;
 using BazziteTools.builder.command.distrobox;
+using BazziteTools.builder.command.distrobox.images;
 
 Console.WriteLine("Hello, World!");
 
