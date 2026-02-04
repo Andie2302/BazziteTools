@@ -60,5 +60,9 @@ public class DistroboxCreateBuilder : LinuxCommandBuilder<DistroboxCreateBuilder
         }
         return this;
     }
-    
+    public DistroboxCreateBuilder WithInitScript(string scriptPath)
+    {
+        AddLongOption("init-hooks", scriptPath);
+        return this;
+    }
 }
