@@ -18,6 +18,7 @@ public class CommandBuilder
         _commandBuilder.Append(parameter);
         return this;
     }
+
     public CommandBuilder AddRange(params CommandParameter[] parameter)
     {
         foreach (var commandParameter in parameter)
@@ -25,16 +26,13 @@ public class CommandBuilder
         return this;
     }
 
-    public string Build() => _commandBuilder.ToString();
-    public override string ToString() => Build();
-}
+    public string Build()
+    {
+        return _commandBuilder.ToString();
+    }
 
-public class CommandParameter
-{
-    public string Prefix { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string Value { get; set; } = string.Empty;
-    public string Separator { get; set; } = string.Empty;
-    public string Postfix { get; set; } = string.Empty; 
-    public override string ToString() => $"{Prefix}{Name}{Separator}{Value}{Postfix}";
+    public override string ToString()
+    {
+        return Build();
+    }
 }
