@@ -31,10 +31,10 @@ public class CommandBuilder
 
 public class CommandParameter
 {
-    public string Prefix { get; set; }
-    public string Name { get; set; }
-    public string Value { get; set; }
-    public string Separator { get; set; }
-    public string Postfix { get; set; }
+    public string Prefix { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Value { get; set; } = string.Empty;
+    public string Separator { get; set; } = string.Empty;
+    public string Postfix { get; set; } = string.Empty; 
     public override string ToString() => $"{Prefix}{Name}{Separator}{Value}{Postfix}";
 }
