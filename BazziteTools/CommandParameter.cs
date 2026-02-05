@@ -1,7 +1,5 @@
 namespace BazziteTools;
 
-public interface ICommandParameter;
-
 public class CommandParameter:ICommandParameter
 {
     public string Prefix { get; set; } = string.Empty;
@@ -42,32 +40,3 @@ public class CommandParameter:ICommandParameter
         return this;
     }
 }
-
-public class CommandVerb: CommandParameter
-{
-    public CommandVerb(string name)
-    {
-        Name = name;
-    }
-}
-
-public class CommandLongOption: CommandParameter
-{
-    public CommandLongOption(string name)
-    {
-        Prefix = "--";
-        Name = name;
-    }
-}
-
-public class CommandShortOption: CommandParameter
-{
-    public CommandShortOption(string name)
-    {
-        Prefix = "-";
-        Name = name;
-    }
-}
-
-
-
