@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command.@base;
+namespace BazziteTools.builder.command.@base.interfaces;
 
 public interface IKeyParameter<out TKey> : ICommandParameter
 {
