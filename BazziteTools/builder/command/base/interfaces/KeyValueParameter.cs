@@ -1,9 +1,9 @@
-namespace BazziteTools.builder.command.@base;
+namespace BazziteTools.builder.command.@base.interfaces;
 
 public class KeyValueParameter : KeyParameter, IKeyValueParameter<KeyValueParameter, KeyValueParameter>
 {
     public string Value { get; set; } = string.Empty;
-    public string Separator { get; set; } = "=";
+    public string Separator { get; set; } = " ";
 
     public KeyValueParameter WithValue(string value)
     {
