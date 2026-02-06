@@ -1,83 +1,52 @@
 ﻿
-using BazziteTools;
-using BazziteTools.check;
-using BazziteTools.command;
 
-Console.WriteLine("Hello, World!");
+using BazziteTools.builder.command.@base;
 
+Console.WriteLine("=== BazziteTools Integration Test ===\n");
 
-// Test 1: Ein komplexer Distrobox-Befehl (Verb + LongOptions + Flags)
-var distrobox = new CommandBuilder("distrobox")
+// 1. Test: Ein klassischer Distrobox-Befehl
+// Erwartet: distrobox create --name development --nvidia --root
+var distrobox = new Command("distrobox")
     .Add(P.Verb("create"))
-    .Add(P.LongOption("name", "ki-box"))
-    .Add(P.LongOption("image", "ubuntu:22.04"))
-    .Add(P.Flag("nvidia"))
-    .Add(P.Flag("v"));
+    .Add(P.LOpt("name", "development"))
+    .Add(P.LFlag("nvidia"))
+    .Add(P.LFlag("root"));
 
-Console.WriteLine("--- Distrobox Test ---");
+Console.WriteLine("Test 1 (Distrobox):");
 Console.WriteLine(distrobox.Build());
-// Erwartet: distrobox create --name ki-box --image ubuntu:22.04 -nvidia -v
-// Hinweis: Falls nvidia ein LongFlag sein soll, nutzt du P.LongOption("nvidia", "") 
-// oder wir müssten P.LongFlag hinzufügen.
+Console.WriteLine();
 
 
-// Test 2: Ein Zuweisungs-Befehl (z.B. für Pfade oder dd)
-var ddCommand = new CommandBuilder("sudo dd")
+// 2. Test: Hardware-Abfrage deiner NVIDIA RTX 5060 Ti
+// Erwartet: nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader
+// Hier nutzen wir .WithSeparator("="), falls nvidia-smi das benötigt
+var gpuCheck = new Command("nvidia-smi")
+    .Add(P.LOpt("query-gpu", "temperature.gpu").WithSeparator("="))
+    .Add(P.LOpt("format", "csv,noheader").WithSeparator("="));
+
+Console.WriteLine("Test 2 (NVIDIA SMI):");
+Console.WriteLine(gpuCheck.Build());
+Console.WriteLine();
+
+
+// 3. Test: System-nahe Zuweisungen (wie dd oder Pfade)
+// Erwartet: sudo dd if=/dev/nvme0n1 of=/home/andreas/backup.img bs=4M
+var ddBackup = new Command("sudo dd")
     .Add(P.Assign("if", "/dev/nvme0n1"))
     .Add(P.Assign("of", "/home/andreas/backup.img"))
     .Add(P.Assign("bs", "4M"));
 
-Console.WriteLine("\n--- Zuweisung (Assign) Test ---");
-Console.WriteLine(ddCommand.Build());
-// Erwartet: sudo dd if=/dev/nvme0n1 of=/home/andreas/backup.img bs=4M
+Console.WriteLine("Test 3 (Zuweisungen):");
+Console.WriteLine(ddBackup.Build());
+Console.WriteLine();
 
 
-// Test 3: Hardware-Abfrage für deine RTX 5060 Ti
-var gpuTemp = new CommandBuilder("nvidia-smi")
-    .Add(P.LongOption("query-gpu", "temperature.gpu"))
-    .Add(P.LongOption("format", "csv,noheader"));
-
-Console.WriteLine("\n--- NVIDIA GPU Temp Test ---");
-Console.WriteLine(gpuTemp.Build());
-// Erwartet: nvidia-smi --query-gpu temperature.gpu --format csv,noheader
-
-
-// Test 4: Mischen von manuellen CommandParameters und P-Klasse (Der "Spagat")
-var custom = new CommandBuilder("flatpak")
+// 4. Test: Flatpak mit speziellen Suffixen (Fluent-Check)
+// Erwartet: flatpak install --user! flathub
+var flatpak = new Command("flatpak")
     .Add(P.Verb("install"))
-    .Add(new CommandParameter()
-        .WithPrefix("--")
-        .WithName("user")
-        .WithPostfix("!") // Nur als Beispiel für die Flexibilität
-        .WithSeparator(":"))
-    .Add(P.Argument("flathub"));
+    .Add(P.LFlag("user").WithSuffix("!"))
+    .Add(P.Arg("flathub"));
 
-Console.WriteLine("\n--- Custom Flexibilität Test ---");
-Console.WriteLine(custom.Build());
-
-/*
-
-using BazziteTools.builder.command.distrobox;
-using BazziteTools.builder.command.distrobox.images;
-
-
-
-const string name = "ki";
-var home = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),"distroboxes",name);
-
-var distrobox = DistroBox.Create().WithName(name).WithHome(home).WithLatestImage(DistroboxImage.Ubuntu).UseNvidia();
-
-distrobox.WithPackages("python3", "python3-pip","zstd","nano","nodejs","npm");
-
-Console.WriteLine(distrobox.Build());
-
-//curl -fsSL https://ollama.com/install.sh | sh
-//pip install open-webui --break-system-packages
-//curl -fsSL https://openclaw.ai/install.sh | bash
-//sudo npm install -g openclaw
-
-//curl -fsSL https://ollama.com/install.sh | sh
-//pip install open-webui --break-system-packages
-//sudo npm install -g openclaw
-
-//*/
+Console.WriteLine("Test 4 (Fluent & Suffix):");
+Console.WriteLine(flatpak.Build());
