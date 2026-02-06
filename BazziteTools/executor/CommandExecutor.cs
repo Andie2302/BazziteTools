@@ -9,8 +9,6 @@ public class CommandExecutor
 
     public async Task<string> ExecuteAsync(Command command)
     {
-        // Wir nutzen bash -c, um sicherzustellen, dass Pipe-Operatoren 
-        // und Linux-Pfad-Erweiterungen korrekt funktionieren.
         var startInfo = new ProcessStartInfo
         {
             FileName = ShellExecutable,
@@ -27,7 +25,6 @@ public class CommandExecutor
         {
             process.Start();
 
-            // Wir lesen Output und Error gleichzeitig aus
             string output = await process.StandardOutput.ReadToEndAsync();
             string error = await process.StandardError.ReadToEndAsync();
 
@@ -35,7 +32,6 @@ public class CommandExecutor
 
             if (process.ExitCode != 0)
             {
-                // Falls ein Fehler auftritt, geben wir die Fehlermeldung zurück
                 return $"Error: {error}";
             }
 
@@ -53,4 +49,3 @@ public class CommandExecutor
         return $"-c \"{escapedCommand}\"";
     }
 }
-// ... existing code ...
