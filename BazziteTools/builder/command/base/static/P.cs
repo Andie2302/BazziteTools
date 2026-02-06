@@ -1,8 +1,10 @@
-namespace BazziteTools.builder.command.@base;
+using BazziteTools.builder.command.@base.interfaces;
+using BazziteTools.builder.command.@base.special;
+
+namespace BazziteTools.builder.command.@base.@static;
 
 public static class P
 {
-    // Nutze den Konstruktor und setze den Key direkt
     public static LongFlagParameter LFlag(string key) => new LongFlagParameter { Key = key };
     public static ShortFlagParameter Flag(string key) => new ShortFlagParameter { Key = key };
     
