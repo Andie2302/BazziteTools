@@ -3,17 +3,19 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.executor;
 
+public record ShellInfo(string ShellExecutable, string ShellArguments);
+
+
 public class CommandExecutor
 {
-    private const string ShellExecutable = "bash";
-    private const string ShellArguments = "-c";
+    public static ShellInfo ShellInfo { get; set; } = new("bash", "-c");
 
     public static async Task<string> ExecuteAsync(Command command)
     {
         var startInfo = new ProcessStartInfo
         {
-            FileName = ShellExecutable,
-            Arguments = BuildBashArguments(command),
+            FileName = ShellInfo.ShellExecutable,
+            Arguments = BuildShellArguments(command),
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -40,9 +42,9 @@ public class CommandExecutor
         }
     }
 
-    private static string BuildBashArguments(Command command)
+    private static string BuildShellArguments(Command command)
     {
         var escapedCommand = command.Build().Replace("\"", "\\\"");
-        return $"{ShellArguments} \"{escapedCommand}\"";
+        return $"{ShellInfo.ShellArguments} \"{escapedCommand}\"";
     }
 }
