@@ -1,16 +1,12 @@
 using BazziteTools.builder.command.@base;
+using BazziteTools.builder.command.@base.@static;
 
 namespace BazziteTools.builder.command.distrobox;
 
 public class DistroboxAssembleCommand
 {
-    private readonly Command _command;
-
-    public DistroboxAssembleCommand()
-    {
-        _command = new Command("distrobox")
-            .Add(P.Verb("assemble"));
-    }
+    private readonly Command _command = new Command("distrobox")
+        .Add(P.Verb("assemble"));
 
     public DistroboxAssembleCommand Create()
     {
