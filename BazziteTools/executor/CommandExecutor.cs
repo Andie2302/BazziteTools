@@ -6,6 +6,7 @@ namespace BazziteTools.executor;
 public class CommandExecutor
 {
     private const string ShellExecutable = "bash";
+    private const string ShellArguments = "-c";
 
     public static async Task<string> ExecuteAsync(Command command)
     {
@@ -42,6 +43,6 @@ public class CommandExecutor
     private static string BuildBashArguments(Command command)
     {
         var escapedCommand = command.Build().Replace("\"", "\\\"");
-        return $"-c \"{escapedCommand}\"";
+        return $"{ShellArguments} \"{escapedCommand}\"";
     }
 }
