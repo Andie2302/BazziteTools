@@ -2,6 +2,7 @@
 
 using BazziteTools.builder.command.@base;
 using BazziteTools.builder.command.distrobox;
+using BazziteTools.executor;
 
 Console.WriteLine("=== BazziteTools Integration Test ===\n");
 
@@ -60,3 +61,17 @@ var assemble = new DistroboxAssembleCommand()
 
 Console.WriteLine(assemble.Build());
 // Erwartet: distrobox assemble create --file ./distrobox.ini --replace
+
+var executor = new CommandExecutor();
+
+// Wir bauen den Befehl für NVIDIA
+var gpuTempCmd = new Command("nvidia-smi")
+    .Add(P.LOpt("query-gpu", "temperature.gpu").WithSeparator("="))
+    .Add(P.LOpt("format", "csv,noheader,nounits").WithSeparator("="));
+
+Console.WriteLine($"Führe aus: {gpuTempCmd.Build()}");
+
+// Ausführung (asynchron)
+string result = await executor.ExecuteAsync(gpuTempCmd);
+
+Console.WriteLine($"Aktuelle GPU Temperatur: {result}°C");
