@@ -1,6 +1,7 @@
 ﻿
 
 using BazziteTools.builder.command.@base;
+using BazziteTools.builder.command.distrobox;
 
 Console.WriteLine("=== BazziteTools Integration Test ===\n");
 
@@ -50,3 +51,12 @@ var flatpak = new Command("flatpak")
 
 Console.WriteLine("Test 4 (Fluent & Suffix):");
 Console.WriteLine(flatpak.Build());
+
+
+var assemble = new DistroboxAssembleCommand()
+    .Create()
+    .WithFile("./distrobox.ini")
+    .Replace();
+
+Console.WriteLine(assemble.Build());
+// Erwartet: distrobox assemble create --file ./distrobox.ini --replace
