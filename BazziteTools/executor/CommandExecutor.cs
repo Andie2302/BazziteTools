@@ -7,7 +7,7 @@ public class CommandExecutor
 {
     private const string ShellExecutable = "bash";
 
-    public async Task<string> ExecuteAsync(Command command)
+    public static async Task<string> ExecuteAsync(Command command)
     {
         var startInfo = new ProcessStartInfo
         {
@@ -19,23 +19,19 @@ public class CommandExecutor
             CreateNoWindow = true
         };
 
-        using var process = new Process { StartInfo = startInfo };
+        using var process = new Process();
+        process.StartInfo = startInfo;
 
         try
         {
             process.Start();
 
-            string output = await process.StandardOutput.ReadToEndAsync();
-            string error = await process.StandardError.ReadToEndAsync();
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
 
             await process.WaitForExitAsync();
 
-            if (process.ExitCode != 0)
-            {
-                return $"Error: {error}";
-            }
-
-            return output.Trim();
+            return process.ExitCode != 0 ? $"Error: {error}" : output.Trim();
         }
         catch (Exception ex)
         {
@@ -45,7 +41,7 @@ public class CommandExecutor
 
     private static string BuildBashArguments(Command command)
     {
-        string escapedCommand = command.Build().Replace("\"", "\\\"");
+        var escapedCommand = command.Build().Replace("\"", "\\\"");
         return $"-c \"{escapedCommand}\"";
     }
 }
