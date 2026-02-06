@@ -61,6 +61,6 @@ var gpuTempCmd = new Command("nvidia-smi")
 
 Console.WriteLine($"Führe aus: {gpuTempCmd.Build()}");
 
-string result = await executor.ExecuteAsync(gpuTempCmd);
+var result = await CommandExecutor.ExecuteAsync(gpuTempCmd);
 
 Console.WriteLine($"Aktuelle GPU Temperatur: {result}°C");
