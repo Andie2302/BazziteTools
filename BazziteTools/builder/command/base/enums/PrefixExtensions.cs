@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command.@base;
+namespace BazziteTools.builder.command.@base.enums;
 
 public static class PrefixExtensions
 {
