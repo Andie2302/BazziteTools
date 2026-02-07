@@ -1,18 +1,18 @@
+
+
 using System.Diagnostics;
 using BazziteTools.builder.command.@base;
 
-namespace BazziteTools.executor;
-
-public class CommandExecutor
+public static class CommandExecutor
 {
-    public static ShellInfo ShellInfo { get; set; } = new("bash", "-c");
-
-    public static async Task<string> ExecuteAsync(Command command)
+    public static async Task<CommandResult> ExecuteAsync(Command command)
     {
+        string finalCommand = command.Build();
+        
         var startInfo = new ProcessStartInfo
         {
-            FileName = ShellInfo.ShellExecutable,
-            Arguments = BuildShellArguments(command),
+            FileName = "bash",
+            Arguments = $"-c \"{finalCommand.Replace("\"", "\\\"")}\"", 
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -26,22 +26,37 @@ public class CommandExecutor
         {
             process.Start();
 
-            var output = await process.StandardOutput.ReadToEndAsync();
-            var error = await process.StandardError.ReadToEndAsync();
+            var outputTask = process.StandardOutput.ReadToEndAsync();
+            var errorTask = process.StandardError.ReadToEndAsync();
 
+            await Task.WhenAll(outputTask, errorTask);
             await process.WaitForExitAsync();
 
-            return process.ExitCode != 0 ? $"Error: {error}" : output.Trim();
+            return new CommandResult(
+                process.ExitCode, 
+                outputTask.Result.Trim(), 
+                errorTask.Result.Trim(), 
+                finalCommand);
         }
         catch (Exception ex)
         {
-            return $"Exception: {ex.Message}";
+            return new CommandResult(-1, string.Empty, ex.Message, finalCommand);
         }
     }
+}
 
-    private static string BuildShellArguments(Command command)
-    {
-        var escapedCommand = command.Build().Replace("\"", "\\\"");
-        return $"{ShellInfo.ShellArguments} \"{escapedCommand}\"";
-    }
+public record CommandResult(
+    int ExitCode,
+    string Output,
+    string Error,
+    string FullCommand)
+{
+    /// <summary>
+    /// Gibt an, ob der Befehl erfolgreich (Exit Code 0) ausgeführt wurde.
+    /// </summary>
+    public bool Success => ExitCode == 0;
+
+    public override string ToString() => Success
+        ? $"Success: {Output}"
+        : $"Failed (ExitCode: {ExitCode}): {Error}";
 }
