@@ -1,7 +1,10 @@
-public class ArgumentParameter
+using BazziteTools.builder.command.@base.enums;
+
+namespace BazziteTools.builder.command.@base.special;
+
+public class ArgumentParameter : KeyParameter<ArgumentParameter>
 {
-    public ArgumentParameter WithValue(string value)
-    {
-        throw new NotImplementedException();
-    }
+    public ArgumentParameter() => Prefix = Prefixes.None;
+
+    public ArgumentParameter WithValue(string value) => WithKey(value);
 }
