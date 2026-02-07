@@ -3,4 +3,12 @@ using BazziteTools.builder.command.@base.interfaces;
 
 namespace BazziteTools.builder.command.@base.special;
 
-public class ShortOptionParameter : KeyValueParameter { public ShortOptionParameter() { Prefix = Prefixes.Dash; Separator = " "; } }
+// Hier geben wir 'LongOptionParameter' als T an die Basisklasse weiter
+public class ShortOptionParameter : KeyValueParameter<ShortOptionParameter, string>
+{
+    public ShortOptionParameter()
+    {
+        Prefix = Prefixes.DoubleDash;
+        Separator = " ";
+    }
+}
