@@ -3,28 +3,32 @@ using BazziteTools.builder.command.@base.interfaces;
 
 namespace BazziteTools.builder.command.@base;
 
-public class KeyParameter : IKeyParameter<KeyParameter>
+public abstract class KeyParameter<T> : IKeyParameter<T> where T : KeyParameter<T>
 {
     public string Key { get; set; } = string.Empty;
     public Prefixes Prefix { get; set; } = Prefixes.None;
     public string Suffix { get; set; } = string.Empty;
-    public KeyParameter WithPrefix(Prefixes prefix)
+
+    public T WithPrefix(Prefixes prefix)
     {
         Prefix = prefix;
-        return this;
+        return (T)this;
     }
 
-    public KeyParameter WithSuffix(string suffix)
+    public T WithSuffix(string suffix)
     {
         Suffix = suffix;
-        return this;
+        return (T)this;
     }
 
-    public KeyParameter WithKey(string key)
+    public T WithKey(string key)
     {
         Key = key;
-        return this;
+        return (T)this;
     }
 
-    public virtual string Build() => $"{Prefix.ToValue()}{Key}{Suffix}";
+    public virtual string Build()
+    {
+        return $"{Prefix.ToValue()}{Key}{Suffix}";
+    }
 }
