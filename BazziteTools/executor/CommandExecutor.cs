@@ -3,9 +3,6 @@ using BazziteTools.builder.command.@base;
 
 namespace BazziteTools.executor;
 
-public record ShellInfo(string ShellExecutable, string ShellArguments);
-
-
 public class CommandExecutor
 {
     public static ShellInfo ShellInfo { get; set; } = new("bash", "-c");
