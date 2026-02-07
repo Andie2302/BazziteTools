@@ -2,7 +2,7 @@ using BazziteTools.builder.command.@base.enums;
 
 namespace BazziteTools.builder.command.@base.interfaces;
 
-public abstract class KeyValueParameter<T, TValue> : KeyParameter<T>, IKeyValueParameter<T, TValue> 
+public abstract class KeyValueParameter<T, TValue> : KeyParameter<T>, IKeyValueParameter<T, TValue>
     where T : KeyValueParameter<T, TValue>
 {
     public TValue Value { get; set; } = default!;
@@ -19,8 +19,22 @@ public abstract class KeyValueParameter<T, TValue> : KeyParameter<T>, IKeyValueP
         Separator = separator;
         return (T)this;
     }
+
     public override string Build()
     {
         return $"{Prefix.ToValue()}{Key}{Separator}{Value}{Suffix}";
+    }
+
+    public override IEnumerable<string> Validate()
+    {
+        foreach (var error in base.Validate())
+        {
+            yield return error;
+        }
+
+        if (Value == null || string.IsNullOrWhiteSpace(Value.ToString()))
+        {
+            yield return $"{GetType().Name}: Der Wert (Value) darf nicht leer sein.";
+        }
     }
 }
