@@ -3,4 +3,12 @@ using BazziteTools.builder.command.@base.interfaces;
 
 namespace BazziteTools.builder.command.@base.special;
 
-public class LongOptionParameter : KeyValueParameter { public LongOptionParameter() { Prefix = Prefixes.DoubleDash; Separator = " "; } }
+// Hier geben wir 'LongOptionParameter' als T an die Basisklasse weiter
+public class LongOptionParameter : KeyValueParameter<LongOptionParameter, string>
+{
+    public LongOptionParameter()
+    {
+        Prefix = Prefixes.DoubleDash;
+        Separator = " "; // Standard für Long Options: --key value
+    }
+}
