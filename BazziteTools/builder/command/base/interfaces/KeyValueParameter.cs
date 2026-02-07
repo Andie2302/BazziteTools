@@ -1,34 +1,26 @@
-// KeyValueParameter.cs
-
 using BazziteTools.builder.command.@base.enums;
 
 namespace BazziteTools.builder.command.@base.interfaces;
 
-public abstract class KeyValueParameter<T, TValue> : KeyParameter, IKeyValueParameter<T, TValue> 
+public abstract class KeyValueParameter<T, TValue> : KeyParameter<T>, IKeyValueParameter<T, TValue> 
     where T : KeyValueParameter<T, TValue>
 {
     public TValue Value { get; set; } = default!;
     public string Separator { get; set; } = "=";
 
-    public T WithValue(TValue value) { Value = value; return (T)this; }
-    public T WithSeparator(string separator) { Separator = separator; return (T)this; }
-
-    public override string Build() => $"{Prefix.ToValue()}{Key}{Separator}{Value}{Suffix}";
-    public string Key { get; set; }
-    public Prefixes Prefix { get; set; }
-    public string Suffix { get; set; }
-    public T WithPrefix(Prefixes prefix)
+    public T WithValue(TValue value)
     {
-        throw new NotImplementedException();
+        Value = value;
+        return (T)this;
     }
 
-    public T WithSuffix(string suffix)
+    public T WithSeparator(string separator)
     {
-        throw new NotImplementedException();
+        Separator = separator;
+        return (T)this;
     }
-
-    public T WithKey(string key)
+    public override string Build()
     {
-        throw new NotImplementedException();
+        return $"{Prefix.ToValue()}{Key}{Separator}{Value}{Suffix}";
     }
 }
