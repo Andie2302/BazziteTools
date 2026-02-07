@@ -16,13 +16,19 @@ public class Command(string executableName)
 
     public string Build()
     {
-        var sb = new StringBuilder();
+        var validationErrors = _parameters
+            .SelectMany(p => p.Validate())
+            .ToList();
 
-        if (UseSudo)
+        if (validationErrors.Count != 0)
         {
-            sb.Append("sudo ");
+            throw new InvalidOperationException(
+                "Kommando konnte nicht gebaut werden:\n" + 
+                string.Join("\n", validationErrors));
         }
 
+        var sb = new StringBuilder();
+        if (UseSudo) sb.Append("sudo ");
         sb.Append(executableName);
 
         foreach (var parameter in _parameters)
