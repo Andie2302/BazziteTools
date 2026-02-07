@@ -1,3 +1,4 @@
+using BazziteTools.builder.command.@base.enums;
 using BazziteTools.builder.command.@base.interfaces;
 
 namespace BazziteTools.builder.command.@base;
@@ -5,20 +6,25 @@ namespace BazziteTools.builder.command.@base;
 public class KeyParameter : IKeyParameter<KeyParameter>
 {
     public string Key { get; set; } = string.Empty;
-    public string Prefix { get; set; } = string.Empty;
+    public Prefixes Prefix { get; set; } = Prefixes.None;
     public string Suffix { get; set; } = string.Empty;
-
-    private KeyParameter SetAndReturn(System.Action<string> assign, string value)
+    public KeyParameter WithPrefix(Prefixes prefix)
     {
-        assign(value);
+        Prefix = prefix;
         return this;
     }
 
-    public KeyParameter WithPrefix(string prefix) => SetAndReturn(v => Prefix = v, prefix);
+    public KeyParameter WithSuffix(string suffix)
+    {
+        Suffix = suffix;
+        return this;
+    }
 
-    public KeyParameter WithSuffix(string suffix) => SetAndReturn(v => Suffix = v, suffix);
+    public KeyParameter WithKey(string key)
+    {
+        Key = key;
+        return this;
+    }
 
-    public KeyParameter WithKey(string key) => SetAndReturn(v => Key = v, key);
-
-    public virtual string Build() => $"{Prefix}{Key}{Suffix}";
+    public virtual string Build() => $"{Prefix.ToValue()}{Key}{Suffix}";
 }
