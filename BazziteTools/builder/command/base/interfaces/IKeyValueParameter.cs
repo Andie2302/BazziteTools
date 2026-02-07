@@ -1,9 +1,10 @@
 namespace BazziteTools.builder.command.@base.interfaces;
 
-public interface IKeyValueParameter<TKey, out TValue> : IKeyParameter<TKey>
+// IKeyValueParameter.cs
+public interface IKeyValueParameter<out T, TValue> : IKeyParameter<T> where T : IKeyValueParameter<T, TValue>
 {
-    string Value { get; set; }
+    TValue Value { get; set; }
     string Separator { get; set; }
-    public TValue WithValue(string value);
-    public TValue WithSeparator(string separator);
+    T WithValue(TValue value);
+    T WithSeparator(string separator);
 }
