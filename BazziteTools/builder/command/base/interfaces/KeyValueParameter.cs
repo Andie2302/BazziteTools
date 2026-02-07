@@ -1,3 +1,5 @@
+using BazziteTools.builder.command.@base.enums;
+
 namespace BazziteTools.builder.command.@base.interfaces;
 
 public class KeyValueParameter : KeyParameter, IKeyValueParameter<KeyValueParameter, KeyValueParameter>
@@ -17,7 +19,7 @@ public class KeyValueParameter : KeyParameter, IKeyValueParameter<KeyValueParame
         return this;
     }
 
-    public new KeyValueParameter WithPrefix(string prefix)
+    public new KeyValueParameter WithPrefix(Prefixes prefix)
     {
         base.WithPrefix(prefix);
         return this;
