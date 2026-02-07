@@ -3,4 +3,4 @@ using BazziteTools.builder.command.@base.interfaces;
 
 namespace BazziteTools.builder.command.@base.special;
 
-public class LongOptionParameter : KeyValueParameter { public LongOptionParameter() { Prefix = Prefixes.DoubleDash.ToValue(); Separator = " "; } }
+public class LongOptionParameter : KeyValueParameter { public LongOptionParameter() { Prefix = Prefixes.DoubleDash; Separator = " "; } }
