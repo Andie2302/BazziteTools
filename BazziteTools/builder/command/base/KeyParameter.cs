@@ -31,4 +31,12 @@ public abstract class KeyParameter<T> : IKeyParameter<T> where T : KeyParameter<
     {
         return $"{Prefix.ToValue()}{Key}{Suffix}";
     }
+
+    public virtual IEnumerable<string> Validate()
+    {
+        if (Prefix != Prefixes.None && string.IsNullOrWhiteSpace(Key))
+        {
+            yield return $"{GetType().Name}: Ein Parameter mit Präfix '{Prefix}' benötigt einen Key.";
+        }
+    }
 }
