@@ -11,4 +11,3 @@ public interface IKeyParameter<out TKey> : ICommandParameter
     public TKey WithSuffix(string suffix);
     public TKey WithKey(string key);
 }
-
