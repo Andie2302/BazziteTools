@@ -1,4 +1,4 @@
-namespace BazziteTools.executor;
+namespace BazziteTools.command.@base.executor;
 
 public record CommandResult(
     int ExitCode,
