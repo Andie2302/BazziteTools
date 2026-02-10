@@ -1,7 +1,7 @@
-using BazziteTools.builder.command.@base.enums;
-using BazziteTools.builder.command.@base.interfaces;
+using BazziteTools.command.@base.builder.enums;
+using BazziteTools.command.@base.builder.interfaces;
 
-namespace BazziteTools.builder.command.@base;
+namespace BazziteTools.command.@base.builder;
 
 public abstract class KeyParameter<T> : IKeyParameter<T> where T : KeyParameter<T>
 {
