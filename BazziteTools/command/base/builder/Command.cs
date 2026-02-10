@@ -1,7 +1,7 @@
 using System.Text;
-using BazziteTools.builder.command.@base.interfaces;
+using BazziteTools.command.@base.builder.interfaces;
 
-namespace BazziteTools.builder.command.@base;
+namespace BazziteTools.command.@base.builder;
 
 public class Command(string executableName)
 {
