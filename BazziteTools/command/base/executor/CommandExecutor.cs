@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using BazziteTools.builder.command.@base;
+using BazziteTools.command.@base.builder;
 
-namespace BazziteTools.executor;
+namespace BazziteTools.command.@base.executor;
 
 public static class CommandExecutor
 {
