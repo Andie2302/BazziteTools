@@ -12,7 +12,8 @@ public class DistroboxCreate
     /// </summary>
     public DistroboxCreate WithName(string name)
     {
-        _command.Add(P.LongOption("name").WithValue(name));
+        // In KeyValueParameter.cs heißt die Methode .Value(string value)
+        _command.Add(P.LongOption("name").Value(name));
         return this;
     }
 
@@ -21,7 +22,7 @@ public class DistroboxCreate
     /// </summary>
     public DistroboxCreate FromImage(string image)
     {
-        _command.Add(P.LongOption("image").WithValue(image));
+        _command.Add(P.LongOption("image").Value(image));
         return this;
     }
 
@@ -44,13 +45,13 @@ public class DistroboxCreate
     }
 
     /// <summary>
-    /// Fügt zusätzliche Pakete hinzu, die während der Erstellung installiert werden sollen (--additional-packages).
+    /// Fügt zusätzliche Pakete hinzu (--additional-packages).
     /// </summary>
     public DistroboxCreate WithAdditionalPackages(params string[] packages)
     {
         if (packages.Length > 0)
         {
-            _command.Add(P.LongOption("additional-packages").WithValue(string.Join(" ", packages)));
+            _command.Add(P.LongOption("additional-packages").Value(string.Join(" ", packages)));
         }
         return this;
     }
