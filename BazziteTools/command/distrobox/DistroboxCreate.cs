@@ -12,8 +12,9 @@ public class DistroboxCreate
     /// </summary>
     public DistroboxCreate WithName(string name)
     {
-        // In KeyValueParameter.cs heißt die Methode .Value(string value)
-        _command.Add(P.LongOption("name").Value(name));
+        var opt = P.LongOption("name");
+        opt.Value = name; // Zuweisung an das Property
+        _command.Add(opt);
         return this;
     }
 
@@ -22,7 +23,9 @@ public class DistroboxCreate
     /// </summary>
     public DistroboxCreate FromImage(string image)
     {
-        _command.Add(P.LongOption("image").Value(image));
+        var opt = P.LongOption("image");
+        opt.Value = image; // Zuweisung an das Property
+        _command.Add(opt);
         return this;
     }
 
@@ -51,7 +54,9 @@ public class DistroboxCreate
     {
         if (packages.Length > 0)
         {
-            _command.Add(P.LongOption("additional-packages").Value(string.Join(" ", packages)));
+            var opt = P.LongOption("additional-packages");
+            opt.Value = string.Join(" ", packages); // Zuweisung an das Property
+            _command.Add(opt);
         }
         return this;
     }
