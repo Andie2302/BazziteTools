@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command.@base.interfaces;
+namespace BazziteTools.command.@base.builder.interfaces;
 
 public interface IKeyValueParameter<out T, TValue> : IKeyParameter<T> where T : IKeyValueParameter<T, TValue>
 {
