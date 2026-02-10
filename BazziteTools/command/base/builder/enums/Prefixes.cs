@@ -1,4 +1,4 @@
-namespace BazziteTools.builder.command.@base.enums;
+namespace BazziteTools.command.@base.builder.enums;
 
 public enum Prefixes
 {
