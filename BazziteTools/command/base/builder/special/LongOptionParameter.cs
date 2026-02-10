@@ -1,4 +1,6 @@
 
+using BazziteTools.command.@base.builder.interfaces;
+
 namespace BazziteTools.command.@base.builder.special;
 
 public class LongOptionParameter : KeyParameter<LongOptionParameter>
@@ -7,4 +9,6 @@ public class LongOptionParameter : KeyParameter<LongOptionParameter>
     {
         Prefix = enums.Prefixes.DoubleDash;
     }
+
+   
 }
