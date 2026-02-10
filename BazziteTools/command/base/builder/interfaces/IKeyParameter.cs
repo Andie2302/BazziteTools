@@ -1,6 +1,6 @@
-using BazziteTools.builder.command.@base.enums;
+using BazziteTools.command.@base.builder.enums;
 
-namespace BazziteTools.builder.command.@base.interfaces;
+namespace BazziteTools.command.@base.builder.interfaces;
 
 public interface IKeyParameter<out TKey> : ICommandParameter
 {
