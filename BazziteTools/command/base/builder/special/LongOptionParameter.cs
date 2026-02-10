@@ -1,5 +1,5 @@
 
-namespace BazziteTools.builder.command.@base.special;
+namespace BazziteTools.command.@base.builder.special;
 
 public class LongOptionParameter : KeyParameter<LongOptionParameter>
 {
