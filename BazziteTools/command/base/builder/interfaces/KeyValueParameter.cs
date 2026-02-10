@@ -1,6 +1,6 @@
-using BazziteTools.builder.command.@base.enums;
+using BazziteTools.command.@base.builder.enums;
 
-namespace BazziteTools.builder.command.@base.interfaces;
+namespace BazziteTools.command.@base.builder.interfaces;
 
 public abstract class KeyValueParameter<T, TValue> : KeyParameter<T>, IKeyValueParameter<T, TValue>
     where T : KeyValueParameter<T, TValue>
