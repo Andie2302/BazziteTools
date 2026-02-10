@@ -1,6 +1,6 @@
-using BazziteTools.builder.command.@base.enums;
+using BazziteTools.command.@base.builder.enums;
 
-namespace BazziteTools.builder.command.@base.special;
+namespace BazziteTools.command.@base.builder.special;
 
 public class ArgumentParameter : KeyParameter<ArgumentParameter>
 {
