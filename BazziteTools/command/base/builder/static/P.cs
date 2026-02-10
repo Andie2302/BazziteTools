@@ -1,6 +1,6 @@
-using BazziteTools.builder.command.@base.special;
+using BazziteTools.command.@base.builder.special;
 
-namespace BazziteTools.builder.command.@base.@static;
+namespace BazziteTools.command.@base.builder.@static;
 
 public static class P
 {
